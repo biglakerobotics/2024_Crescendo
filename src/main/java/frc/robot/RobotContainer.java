@@ -1,0 +1,127 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+package frc.robot;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
+// import com.pathplanner.lib.auto.NamedCommands;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.generated.TunerConstants;
+import frc.robot.generated.Commands.BottomShootCommand;
+import frc.robot.generated.Commands.IntakeCommand;
+import frc.robot.generated.Commands.ShootCommand;
+import frc.robot.generated.Commands.SlowShootCommand;
+import frc.robot.generated.Commands.TopShootCommand;
+import frc.robot.generated.Manipulators.BottomShooter;
+import frc.robot.generated.Manipulators.Intake;
+import frc.robot.generated.Manipulators.Shooter;
+import frc.robot.generated.Manipulators.TopShooter;
+
+public class RobotContainer {
+  private final XboxController mXboxController = new XboxController(0);
+
+  private final Shooter mShooter = new Shooter();
+  private final BottomShooter mBottomShooter = new BottomShooter();
+  private final TopShooter mTopShooter = new TopShooter();
+  private final Intake mIntake = new Intake();
+
+  private final ShootCommand mShootCommand = new ShootCommand(mShooter);
+  private final BottomShootCommand mBottomShootCommand = new BottomShootCommand(mBottomShooter);
+  private final TopShootCommand mTopShootCommand = new TopShootCommand(mTopShooter);
+  private final IntakeCommand mIntakeCommand = new IntakeCommand(mIntake);
+  
+
+  private JoystickButton shootButton = new JoystickButton(mXboxController, 4);
+  private JoystickButton intakeButton = new JoystickButton(mXboxController, 1);
+  private JoystickButton bottomShootButton = new JoystickButton(mXboxController, 6);
+  private JoystickButton topShootButton = new JoystickButton(mXboxController, 2);
+
+  SendableChooser<Command> m_chooser;
+  final double MaxSpeed = 1; // 6 meters per second desired top speed
+  final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
+
+  
+  public RobotContainer() {
+
+    // NamedCommands.registerCommand("PrintHi", Commands.print("Hi!!!!!!!!!"));
+    configureBindings();
+    m_chooser = new SendableChooser<>();
+
+    // m_chooser.setDefaultOption("Test Auto", new SwerveAutoBuilder());
+
+
+  }
+
+  public Command getAutonomousCommand() {
+
+    return null;
+
+    //  return new PathPlannerAuto("TestPath");
+
+  }
+
+  /* Setting up bindings for necessary control of the swerve drive platform */
+  CommandXboxController joystick = new CommandXboxController(0); // My joystick
+  CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+  SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+  .withDeadband(0.1)
+  .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
+  .withSteerRequestType(SteerRequestType.MotionMagic); // I want field-centric
+                                                                                            // driving in open loop
+  SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+  SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+  Telemetry logger = new Telemetry(MaxSpeed);
+ 
+  
+
+  private void configureBindings() {
+    shootButton.whileTrue(mShootCommand);
+    intakeButton.whileTrue(mIntakeCommand);
+    bottomShootButton.whileTrue(mBottomShootCommand);
+    topShootButton.whileTrue(mTopShootCommand);
+
+
+    drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
+            .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        ));
+
+    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+    joystick.b().whileTrue(drivetrain
+        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+
+    // reset the field-centric heading on left bumper press
+    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+
+    if (Utils.isSimulation()) {
+      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+    }
+    drivetrain.registerTelemetry(logger::telemeterize);
+
+    SmartDashboard.putData("turnQforward", drivetrain.turnQ(SysIdRoutine.Direction.kForward));
+    SmartDashboard.putData("turnQreverse", drivetrain.turnQ(SysIdRoutine.Direction.kReverse));
+
+    SmartDashboard.putData("turnDforward", drivetrain.turnD(SysIdRoutine.Direction.kForward));
+    SmartDashboard.putData("turnDreverse", drivetrain.turnD(SysIdRoutine.Direction.kReverse));
+
+  }
+}
