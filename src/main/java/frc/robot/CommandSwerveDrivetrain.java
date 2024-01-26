@@ -112,8 +112,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             this::getCurrentChassisSpeeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)),
             new HolonomicPathFollowerConfig(
-            new PIDConstants(5.0, 0, 0),  //Translation PID
-            new PIDConstants(5.0, 0, 0 ), //Rotation PID
+            new PIDConstants(5,0,0),  //Translation PID
+            new PIDConstants(40.0, 0, 0 ), //Rotation PID
             TunerConstants.kSpeedAt12VoltsMps, 
             driveBaseRadius,
             new ReplanningConfig()),
@@ -191,11 +191,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
-
+        configurePathplanner();
 
     }
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         super(driveTrainConstants, modules);
+        configurePathplanner();
     }
 
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
