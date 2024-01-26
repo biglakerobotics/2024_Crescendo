@@ -36,6 +36,8 @@ import frc.robot.generated.Manipulators.Shooter;
 import frc.robot.generated.Manipulators.TopShooter;
 
 public class RobotContainer {
+
+
   private final XboxController mXboxController = new XboxController(0);
 
   private final Shooter mShooter = new Shooter();
@@ -72,9 +74,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
 
-    return null;
+    return runAuto;
 
-    //  return new PathPlannerAuto("TestPath");
 
   }
 
@@ -89,6 +90,8 @@ public class RobotContainer {
   SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   Telemetry logger = new Telemetry(MaxSpeed);
+
+  private Command runAuto = drivetrain.getAutoPath("TestingAutos");
  
   
 
@@ -123,5 +126,7 @@ public class RobotContainer {
     SmartDashboard.putData("turnDforward", drivetrain.turnD(SysIdRoutine.Direction.kForward));
     SmartDashboard.putData("turnDreverse", drivetrain.turnD(SysIdRoutine.Direction.kReverse));
 
+    
   }
+
 }
