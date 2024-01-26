@@ -113,7 +113,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)),
             new HolonomicPathFollowerConfig(
             new PIDConstants(5,0,0),  //Translation PID
-            new PIDConstants(40.0, 0, 0 ), //Rotation PID
+            new PIDConstants(20.0, 0, .2 ), //Rotation PID
             TunerConstants.kSpeedAt12VoltsMps, 
             driveBaseRadius,
             new ReplanningConfig()),
