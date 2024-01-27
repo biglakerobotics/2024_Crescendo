@@ -21,11 +21,13 @@ import com.ctre.phoenix6.mechanisms.swerve.SimSwerveDrivetrain.SimSwerveModule;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -46,11 +48,17 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.generated.TunerConstants;
 /**
  * Class that extends the Phoenix SwerveDrivetrain class and implements subsystem
  * so it can be used in command-based projects easily.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
+
+    private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds().withDriveRequestType(DriveRequestType.Velocity).withSteerRequestType(SteerRequestType.MotionMagicExpo);
+
+
+
     // private SwerveModule [] m_swerveModules;
     // private CommandSwerveDrivetrain m_odometry;
     // private SwerveModulePosition [] getModulePositions(){
@@ -70,25 +78,57 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
         public double voltage = 0;
 
+        
         @Override
         public StatusCode apply(SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
-            SwerveModuleState state = new SwerveModuleState();
-            for (int i = 0; i < modulesToApply.length; i++) {
-                try {
-                    Field setter = modulesToApply[i].getClass().getDeclaredField("m_velocityVoltageSetter");
-                    setter.setAccessible(true);
-                    VelocityVoltage request = (VelocityVoltage) setter.get(modulesToApply[i]);
-                    request.FeedForward = voltage;
-                    modulesToApply[i].apply(state, DriveRequestType.Velocity);
-                } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            SwerveModuleState state = new SwerveModuleState(voltage, new Rotation2d());
+            for (SwerveModule m : modulesToApply) { 
+                m.apply(state, DriveRequestType.OpenLoopVoltage);
             }
             return StatusCode.OK;
         }
 
     }
+
+
+    private void configurePathplanner(){
+        double driveBaseRadius = 0;
+        for (var moduleLocation : m_moduleLocations){
+            driveBaseRadius = Math.max(driveBaseRadius, moduleLocation.getNorm());
+        }
+
+        AutoBuilder.configureHolonomic(
+            ()->this.getState().Pose,  //supplies current robot pose
+            this::seedFieldRelative,   //seeding pose against auto (i dont know what this means??!)
+            this::getCurrentChassisSpeeds,
+            (speeds)->this.setControl(autoRequest.withSpeeds(speeds)),
+            new HolonomicPathFollowerConfig(
+            new PIDConstants(5,0,0),  //Translation PID
+            new PIDConstants(20.0, 0, .2 ), //Rotation PID
+            TunerConstants.kSpeedAt12VoltsMps, 
+            driveBaseRadius,
+            new ReplanningConfig(false, false),
+            1 / this.UpdateFrequency),
+            ()->{
+                //Asher's favorite part of code! 
+                //It flips the path depending on the team color!!!!!!!!! :)
+                var alliance = DriverStation.getAlliance();
+                if(alliance.isPresent()){
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+            },
+            this);
+
+            
+    }
+    public ChassisSpeeds getCurrentChassisSpeeds(){
+        return m_kinematics.toChassisSpeeds(getState().ModuleStates);
+    }
+    public Command getAutoPath(String pathName){
+        return new PathPlannerAuto(pathName);
+    }
+
 
     private static class TurnSetVoltageRequest implements SwerveRequest {
 
@@ -143,11 +183,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, double OdometryUpdateFrequency, SwerveModuleConstants... modules) {
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
-
+        configurePathplanner();
 
     }
     public CommandSwerveDrivetrain(SwerveDrivetrainConstants driveTrainConstants, SwerveModuleConstants... modules) {
         super(driveTrainConstants, modules);
+        configurePathplanner();
     }
 
     public Command applyRequest(Supplier<SwerveRequest> requestSupplier) {
@@ -162,7 +203,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     private void setAllMotorVoltage(Measure<Voltage> voltage) {
         driveVoltReq.voltage = voltage.magnitude(); 
-        // this.setControl(driveVoltReq);
+        this.setControl(driveVoltReq);
     }
 
     private void setModuleVolt(Measure<Voltage> voltage) {
