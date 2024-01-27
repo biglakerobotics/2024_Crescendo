@@ -55,7 +55,7 @@ import frc.robot.generated.TunerConstants;
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
 
-    private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
+    private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds().withDriveRequestType(DriveRequestType.Velocity).withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
 
 
@@ -81,18 +81,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         
         @Override
         public StatusCode apply(SwerveControlRequestParameters parameters, SwerveModule... modulesToApply) {
-            SwerveModuleState state = new SwerveModuleState();
-            for (int i = 0; i < modulesToApply.length; i++) {
-                try {
-                    Field setter = modulesToApply[i].getClass().getDeclaredField("m_velocityVoltageSetter");
-                    setter.setAccessible(true);
-                    VelocityVoltage request = (VelocityVoltage) setter.get(modulesToApply[i]);
-                    request.FeedForward = voltage;
-                    modulesToApply[i].apply(state, DriveRequestType.Velocity);
-                } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+            SwerveModuleState state = new SwerveModuleState(voltage, new Rotation2d());
+            for (SwerveModule m : modulesToApply) { 
+                m.apply(state, DriveRequestType.OpenLoopVoltage);
             }
             return StatusCode.OK;
         }
@@ -116,7 +107,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             new PIDConstants(20.0, 0, .2 ), //Rotation PID
             TunerConstants.kSpeedAt12VoltsMps, 
             driveBaseRadius,
-            new ReplanningConfig()),
+            new ReplanningConfig(false, false),
+            1 / this.UpdateFrequency),
             ()->{
                 //Asher's favorite part of code! 
                 //It flips the path depending on the team color!!!!!!!!! :)
@@ -211,7 +203,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     private void setAllMotorVoltage(Measure<Voltage> voltage) {
         driveVoltReq.voltage = voltage.magnitude(); 
-        // this.setControl(driveVoltReq);
+        this.setControl(driveVoltReq);
     }
 
     private void setModuleVolt(Measure<Voltage> voltage) {

@@ -57,7 +57,7 @@ public class RobotContainer {
   private JoystickButton topShootButton = new JoystickButton(mXboxController, 2);
 
   SendableChooser<Command> m_chooser;
-  final double MaxSpeed = 1; // 6 meters per second desired top speed
+  final double MaxSpeed = 2; // 6 meters per second desired top speed
   final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
 
   
@@ -83,9 +83,9 @@ public class RobotContainer {
   CommandXboxController joystick = new CommandXboxController(0); // My joystick
   CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-  .withDeadband(0.1)
-  .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
-  .withSteerRequestType(SteerRequestType.MotionMagic); // I want field-centric
+  .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1)
+  .withDriveRequestType(DriveRequestType.Velocity)
+  .withSteerRequestType(SteerRequestType.MotionMagicExpo); // I want field-centric
                                                                                             // driving in open loop
   SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -120,11 +120,11 @@ public class RobotContainer {
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    SmartDashboard.putData("turnQforward", drivetrain.turnQ(SysIdRoutine.Direction.kForward));
-    SmartDashboard.putData("turnQreverse", drivetrain.turnQ(SysIdRoutine.Direction.kReverse));
+    SmartDashboard.putData("driveQforward", drivetrain.driveQ(SysIdRoutine.Direction.kForward));
+    SmartDashboard.putData("driveQreverse", drivetrain.driveQ(SysIdRoutine.Direction.kReverse));
 
-    SmartDashboard.putData("turnDforward", drivetrain.turnD(SysIdRoutine.Direction.kForward));
-    SmartDashboard.putData("turnDreverse", drivetrain.turnD(SysIdRoutine.Direction.kReverse));
+    SmartDashboard.putData("driveDforward", drivetrain.driveD(SysIdRoutine.Direction.kForward));
+    SmartDashboard.putData("driveDreverse", drivetrain.driveD(SysIdRoutine.Direction.kReverse));
 
     
   }
