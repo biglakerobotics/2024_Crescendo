@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
@@ -17,6 +18,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -59,13 +61,22 @@ public class RobotContainer {
   SendableChooser<Command> m_chooser;
   final double MaxSpeed = 2; // 6 meters per second desired top speed
   final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   
   public RobotContainer() {
 
+    NamedCommands.registerCommand("PrintCookie",Commands.print("You have a cookie"));
+    
+
+
     // NamedCommands.registerCommand("PrintHi", Commands.print("Hi!!!!!!!!!"));
     configureBindings();
-    m_chooser = new SendableChooser<>();
+    autoChooser.setDefaultOption("AutoForAsher",null);
+    autoChooser.addOption("TestingAutos", null);
+    autoChooser.addOption("Cookie Auto", null);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
 
     // m_chooser.setDefaultOption("Test Auto", new SwerveAutoBuilder());
 
@@ -73,6 +84,7 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
+    
 
     return runAuto;
 
@@ -91,7 +103,7 @@ public class RobotContainer {
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   Telemetry logger = new Telemetry(MaxSpeed);
 
-  private Command runAuto = drivetrain.getAutoPath("TestingAutos");
+  private Command runAuto = drivetrain.getAutoPath("AutoForAsher");
  
   
 
@@ -108,8 +120,8 @@ public class RobotContainer {
             .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
-    joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-    joystick.b().whileTrue(drivetrain
+    joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> brake));
+    joystick.rightTrigger().whileTrue(drivetrain
         .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
@@ -126,6 +138,7 @@ public class RobotContainer {
     SmartDashboard.putData("driveDforward", drivetrain.driveD(SysIdRoutine.Direction.kForward));
     SmartDashboard.putData("driveDreverse", drivetrain.driveD(SysIdRoutine.Direction.kReverse));
 
+    
     
   }
 

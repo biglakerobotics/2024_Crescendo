@@ -6,8 +6,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.generated.TunerConstants.IntakeConstants;
 
 public class Intake {
-    private final TalonFX IntakeMotor = new TalonFX(2);
-    private final TalonFX IntakeMotor2 = new TalonFX(3);
+    private final TalonFX IntakeMotor = new TalonFX(22);
+    private final TalonFX IntakeMotor2 = new TalonFX(23);
 
 
 
