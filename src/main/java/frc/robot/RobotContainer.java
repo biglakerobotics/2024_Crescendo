@@ -26,6 +26,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.LimeLightCommands.LimeLightTestCommand;
+import frc.robot.generated.LimeLight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.Commands.BottomShootCommand;
 import frc.robot.generated.Commands.IntakeCommand;
@@ -46,17 +48,21 @@ public class RobotContainer {
   private final BottomShooter mBottomShooter = new BottomShooter();
   private final TopShooter mTopShooter = new TopShooter();
   private final Intake mIntake = new Intake();
+  private final LimeLight mLimelight = new LimeLight();
 
   private final ShootCommand mShootCommand = new ShootCommand(mShooter);
   private final BottomShootCommand mBottomShootCommand = new BottomShootCommand(mBottomShooter);
   private final TopShootCommand mTopShootCommand = new TopShootCommand(mTopShooter);
   private final IntakeCommand mIntakeCommand = new IntakeCommand(mIntake);
+  private final LimeLightTestCommand mLimeLightTestCommand = new LimeLightTestCommand(mLimelight);
   
 
   private JoystickButton shootButton = new JoystickButton(mXboxController, 4);
   private JoystickButton intakeButton = new JoystickButton(mXboxController, 1);
   private JoystickButton bottomShootButton = new JoystickButton(mXboxController, 6);
   private JoystickButton topShootButton = new JoystickButton(mXboxController, 2);
+private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
+
 
   SendableChooser<Command> m_chooser;
   final double MaxSpeed = 2; // 6 meters per second desired top speed
@@ -112,7 +118,7 @@ public class RobotContainer {
     intakeButton.whileTrue(mIntakeCommand);
     bottomShootButton.whileTrue(mBottomShootCommand);
     topShootButton.whileTrue(mTopShootCommand);
-
+    limeLightButton.whileTrue(mLimeLightTestCommand);
 
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
