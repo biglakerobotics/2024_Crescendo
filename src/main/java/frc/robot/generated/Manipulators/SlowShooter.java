@@ -6,8 +6,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import frc.robot.generated.TunerConstants.ShooterConstants;
 
 public class SlowShooter {
-    private final TalonFX ShootMotorTop = new TalonFX(0);
-    private final TalonFX ShootMotorBottom = new TalonFX(1);
+    private final TalonFX ShootMotorTop = new TalonFX(20);
+    private final TalonFX ShootMotorBottom = new TalonFX(21);
 
     // public void SlowShootCommand(){
     //     ShootMotorTop.set(ShooterConstants.SLOWTOPSHOOTERSPEED);
