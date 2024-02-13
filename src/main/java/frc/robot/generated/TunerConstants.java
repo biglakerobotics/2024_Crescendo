@@ -71,20 +71,20 @@ public class TunerConstants {
         public static final double TOPSHOOTERSPEED = .2;
         public static final double BOTTOMSHOOTERSPEED = -1;
         // //Not effective V (B)
-        // public static final double SLOWTOPSHOOTERSPEED = .15;
-        // public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
+        public static final double SLOWTOPSHOOTERSPEED = .15;
+        public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
         //Testing needed V (B)
         public static final double TTOPSHOOTERSPEED = -.35;
         // -.35 ^
         public static final double TBOTTOMSHOOTERSPEED = .35;
         // .35 ^
         //Amp shooter V (RB)
-        public static final double BTOPSHOOTERSPEED = .05;
-        public static final double BBOTTOMSHOOTERSPEED = -.3;
+        public static final double BTOPSHOOTERSPEED = .025;
+        public static final double BBOTTOMSHOOTERSPEED = -.15;
         
     }
         public static class IntakeConstants{
-                public static final double INTAKESPEED = 0.15;
+                public static final double INTAKESPEED = 0.3;
         }
 
 //     public static class SwerveConstants {

@@ -41,6 +41,20 @@ import frc.robot.generated.Manipulators.TopShooter;
 
 public class RobotContainer {
 
+  /*BUTTONS!!!
+   * XBOX:
+   * A = Intake
+   * B = Shoot High
+   * X = Limelight Test
+   * Y = Shoot normal?
+   * Rbumper = Shoot Bottom? Also brake mode for swerve
+   * Lbumper = Reset Gyro
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
 
   private final XboxController mXboxController = new XboxController(0);
 
@@ -73,14 +87,14 @@ private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
   public RobotContainer() {
 
     NamedCommands.registerCommand("PrintCookie",Commands.print("You have a cookie"));
+    NamedCommands.registerCommand("ShootSpeaker", mTopShootCommand);
+    // NamedCommands.registerCommand("StopShooting",);
     
 
 
-    // NamedCommands.registerCommand("PrintHi", Commands.print("Hi!!!!!!!!!"));
     configureBindings();
-    autoChooser.setDefaultOption("AutoForAsher",null);
-    autoChooser.addOption("TestingAutos", null);
-    autoChooser.addOption("Cookie Auto", null);
+    autoChooser.addOption("ScoreTestAuto",drivetrain.getAutoPath("ScoreTestAuto"));
+    autoChooser.setDefaultOption("AutoForAsher",drivetrain.getAutoPath("AutoForAsher"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
@@ -92,7 +106,7 @@ private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
   public Command getAutonomousCommand() {
     
 
-    return runAuto;
+    return autoChooser.getSelected();
 
 
   }
@@ -109,7 +123,7 @@ private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   Telemetry logger = new Telemetry(MaxSpeed);
 
-  private Command runAuto = drivetrain.getAutoPath("AutoForAsher");
+  private Command runAuto = drivetrain.getAutoPath("ScoreTestAuto");
  
   
 
