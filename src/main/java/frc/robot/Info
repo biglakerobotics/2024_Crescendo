@@ -11,7 +11,7 @@ Driver Button Bindings
 10 = RightStickDown ()
 LeftTrigger ()
 RightTrigger (Climber Activate)
-
+__________________________________
 
 Manipulator Button Bindings
 1 = A (Speaker Speed Preset)
@@ -26,27 +26,32 @@ Manipulator Button Bindings
 10 = RightStickDown ()
 LeftTrigger ()
 RightTrigger ()
-
+__________________________________
 
 Shooter Preset Speeds
 
 For Amp
 Top: .025 or 2.5%
 Bottom: -.15 or -15%
+Constants: ATS & ABS
 
 For Speaker
 Top: .2 or 20%
 Bottom: -.5 or -50%
+Constants: STS & SBT
 
-For Trap
+For Trap:
 Top: Need to find
 Bottom: Need to find
+Constatns: TTS & TBS
 
-For Reverse
+For Inverse
 Top: -.35 or -35%
 Bottom: .35 or 35%
-
+Constants: ITS & IBS
+__________________________________
 
 Intake Speeds
 Regular: .15 or 15%
 Inverse: -.15 or -15%
+__________________________________

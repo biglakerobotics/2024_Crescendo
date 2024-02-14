@@ -67,6 +67,26 @@ public class TunerConstants {
     private static final double kDriveFrictionVoltage = 0.25;
 
     public static class ShooterConstants{
+
+        //New Shooter Speeds
+        //STS = Speaker Top Shooter
+        //SBT = Speaker Bottom Shooter
+        public static final double STS = .2;
+        public static final double SBT = -.5;
+        //AMPTS = Amp Top Shooter
+        //AMPBS = Amp Bottom Shooter
+        public static final double ATS = .025;
+        public static final double ABS = -.15;
+        //TTS = Trap Top Shooter
+        //TBS = Trap Bottom Shooter
+        public static final double TTS = 0;
+        public static final double TBS = 0;
+        //ITS = Inverse Top Shooter
+        //IBS = Inverse Bottom Shooter
+        public static final double ITS = -.35;
+        public static final double IBS = .35;
+        //
+
         //Testing needed V (Y)
         public static final double TOPSHOOTERSPEED = .2;
         public static final double BOTTOMSHOOTERSPEED = -.5;
@@ -75,9 +95,7 @@ public class TunerConstants {
         public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
         //Testing needed V (B)
         public static final double TTOPSHOOTERSPEED = -.35;
-        // -.35 ^
         public static final double TBOTTOMSHOOTERSPEED = .35;
-        // .35 ^
         //Amp shooter V (RB)
         public static final double BTOPSHOOTERSPEED = .025;
         public static final double BBOTTOMSHOOTERSPEED = -.15;
