@@ -2,7 +2,7 @@ package frc.robot.generated.Manipulators;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
-
+import frc.robot.generated.Commands.InverseIntakeCommand;
 import frc.robot.generated.TunerConstants.IntakeConstants;
 
 public class Intake {
@@ -14,6 +14,11 @@ public class Intake {
     public void IntakeCommand(){
 IntakeMotor.set(IntakeConstants.INTAKESPEED);
 IntakeMotor2.set(IntakeConstants.INTAKESPEED);
+    }
+
+    public void InverseIntakeCommand(){
+IntakeMotor.set(-IntakeConstants.INTAKESPEED);
+IntakeMotor2.set(-IntakeConstants.INTAKESPEED);
     }
 
 

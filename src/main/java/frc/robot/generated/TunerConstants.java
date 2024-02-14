@@ -69,7 +69,7 @@ public class TunerConstants {
     public static class ShooterConstants{
         //Testing needed V (Y)
         public static final double TOPSHOOTERSPEED = .2;
-        public static final double BOTTOMSHOOTERSPEED = -1;
+        public static final double BOTTOMSHOOTERSPEED = -.5;
         // //Not effective V (B)
         public static final double SLOWTOPSHOOTERSPEED = .15;
         public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
@@ -84,7 +84,7 @@ public class TunerConstants {
         
     }
         public static class IntakeConstants{
-                public static final double INTAKESPEED = 0.3;
+                public static final double INTAKESPEED = 0.15;
         }
 
 //     public static class SwerveConstants {

@@ -1,0 +1,52 @@
+Driver Button Bindings
+1 = A ()
+2 = B ()
+3 = X ()
+4 = Y ()
+5 = LB (In use resets field centric orientation)
+6 = RB (In use puts bot into brake mode)
+7 = BackButton ()
+8 = StartButton ()
+9 = LeftStickDown ()
+10 = RightStickDown ()
+LeftTrigger ()
+RightTrigger (Climber Activate)
+
+
+Manipulator Button Bindings
+1 = A (Speaker Speed Preset)
+2 = B (Amp Speed Preset)
+3 = X (Reverse Shooter/Shooter Intake)
+4 = Y (Trap Speed Preset)
+5 = LB (Regular Intake)
+6 = RB (Inverse Intake)
+7 = BackButton ()
+8 = StartButton ()
+9 = LeftStickDown ()
+10 = RightStickDown ()
+LeftTrigger ()
+RightTrigger ()
+
+
+Shooter Preset Speeds
+
+For Amp
+Top: .025 or 2.5%
+Bottom: -.15 or -15%
+
+For Speaker
+Top: .2 or 20%
+Bottom: -.5 or -50%
+
+For Trap
+Top: Need to find
+Bottom: Need to find
+
+For Reverse
+Top: -.35 or -35%
+Bottom: .35 or 35%
+
+
+Intake Speeds
+Regular: .15 or 15%
+Inverse: -.15 or -15%

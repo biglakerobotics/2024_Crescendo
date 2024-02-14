@@ -31,6 +31,7 @@ import frc.robot.generated.LimeLight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.generated.Commands.BottomShootCommand;
 import frc.robot.generated.Commands.IntakeCommand;
+import frc.robot.generated.Commands.InverseIntakeCommand;
 import frc.robot.generated.Commands.ShootCommand;
 import frc.robot.generated.Commands.SlowShootCommand;
 import frc.robot.generated.Commands.TopShootCommand;
@@ -68,6 +69,7 @@ public class RobotContainer {
   private final BottomShootCommand mBottomShootCommand = new BottomShootCommand(mBottomShooter);
   private final TopShootCommand mTopShootCommand = new TopShootCommand(mTopShooter);
   private final IntakeCommand mIntakeCommand = new IntakeCommand(mIntake);
+  private final InverseIntakeCommand mInverseIntakeCommand = new InverseIntakeCommand(mIntake);
   private final LimeLightTestCommand mLimeLightTestCommand = new LimeLightTestCommand(mLimelight);
   
 
@@ -75,7 +77,8 @@ public class RobotContainer {
   private JoystickButton intakeButton = new JoystickButton(mXboxController, 1);
   private JoystickButton bottomShootButton = new JoystickButton(mXboxController, 6);
   private JoystickButton topShootButton = new JoystickButton(mXboxController, 2);
-private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
+  private JoystickButton limeLightButton = new JoystickButton(mXboxController, 10);
+  private JoystickButton inverseIntakeButton = new JoystickButton(mXboxController, 3);
 
 
   SendableChooser<Command> m_chooser;
@@ -130,6 +133,7 @@ private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
   private void configureBindings() {
     shootButton.whileTrue(mShootCommand);
     intakeButton.whileTrue(mIntakeCommand);
+    inverseIntakeButton.whileTrue(mInverseIntakeCommand);
     bottomShootButton.whileTrue(mBottomShootCommand);
     topShootButton.whileTrue(mTopShootCommand);
     limeLightButton.whileTrue(mLimeLightTestCommand);
