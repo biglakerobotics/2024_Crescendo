@@ -5,13 +5,13 @@ import com.ctre.phoenix6.hardware.TalonFX;
 
 import frc.robot.generated.TunerConstants.ShooterConstants;
 
-public class BottomShooter {
+public class TrapShooter {
     private final TalonFX ShootMotorTop = new TalonFX(20);
     private final TalonFX ShootMotorBottom = new TalonFX(21);
 
-    public void ShootCommand(){
-        ShootMotorTop.set(ShooterConstants.BTOPSHOOTERSPEED);
-        ShootMotorBottom.set(ShooterConstants.BBOTTOMSHOOTERSPEED);
+    public void TrapShootCommand(){
+        ShootMotorTop.set(ShooterConstants.TTS);
+        ShootMotorBottom.set(ShooterConstants.TBS);
     }
 
     public void StopShootingCommand(){

@@ -3,12 +3,12 @@ package frc.robot.generated.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.Manipulators.Intake;
 
-public class IntakeCommand extends Command{
+public class IntakeWithIndexerCommand extends Command{
     
     private final Intake mIntake;
 
 
-    public IntakeCommand(Intake intake){
+    public IntakeWithIndexerCommand(Intake intake){
 
     mIntake = intake;
     }

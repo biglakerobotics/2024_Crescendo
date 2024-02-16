@@ -1,3 +1,18 @@
+Master Button Bindings
+1 = A (Intake With Indexer)
+2 = B (Intake Without Indexer)
+3 = X (Speaker Shooter)
+4 = Y (Amp Shooter)
+5 = LB (In use resets field centric orientation)
+6 = RB (In use puts bot into brake mode)
+7 = BackButton (Trap Shooter)
+8 = StartButton (Inverse Intake)
+9 = LeftStickDown ()
+10 = RightStickDown ()
+LeftTrigger ()
+RightTrigger (Climber Activate)
+__________________________________
+
 Driver Button Bindings
 1 = A ()
 2 = B ()
@@ -18,9 +33,9 @@ Manipulator Button Bindings
 2 = B (Amp Speed Preset)
 3 = X (Reverse Shooter/Shooter Intake)
 4 = Y (Trap Speed Preset)
-5 = LB (Regular Intake)
-6 = RB (Inverse Intake)
-7 = BackButton ()
+5 = LB (Intake With Indexer)
+6 = RB (Intake Without Indexer)
+7 = BackButton (Inverse Intake)
 8 = StartButton ()
 9 = LeftStickDown ()
 10 = RightStickDown ()

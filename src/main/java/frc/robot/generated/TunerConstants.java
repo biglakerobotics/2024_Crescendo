@@ -70,9 +70,9 @@ public class TunerConstants {
 
         //New Shooter Speeds
         //STS = Speaker Top Shooter
-        //SBT = Speaker Bottom Shooter
-        public static final double STS = .2;
-        public static final double SBT = -.5;
+        //SBS = Speaker Bottom Shooter
+        public static final double STS = 1;
+        public static final double SBS = -.4;
         //AMPTS = Amp Top Shooter
         //AMPBS = Amp Bottom Shooter
         public static final double ATS = .025;
@@ -94,15 +94,15 @@ public class TunerConstants {
         public static final double SLOWTOPSHOOTERSPEED = .15;
         public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
         //Testing needed V (B)
-        public static final double TTOPSHOOTERSPEED = -.35;
-        public static final double TBOTTOMSHOOTERSPEED = .35;
+        public static final double TTOPSHOOTERSPEED = .35;
+        public static final double TBOTTOMSHOOTERSPEED = -.35;
         //Amp shooter V (RB)
         public static final double BTOPSHOOTERSPEED = .025;
         public static final double BBOTTOMSHOOTERSPEED = -.15;
         
     }
         public static class IntakeConstants{
-                public static final double INTAKESPEED = 0.15;
+                public static final double INTAKESPEED = .2;
         }
 
 //     public static class SwerveConstants {

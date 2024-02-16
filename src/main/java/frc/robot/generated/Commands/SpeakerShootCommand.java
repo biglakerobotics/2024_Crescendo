@@ -1,19 +1,19 @@
 package frc.robot.generated.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.generated.Manipulators.BottomShooter;
+import frc.robot.generated.Manipulators.SpeakerShooter;
 
-public class BottomShootCommand extends Command{
+public class SpeakerShootCommand extends Command{
 
-    private final BottomShooter mShooter;
+    private final SpeakerShooter mShooter;
 
-    public BottomShootCommand(BottomShooter shooter){
+    public SpeakerShootCommand(SpeakerShooter shooter){
         mShooter = shooter;
     }
     
     @Override
     public void execute(){
-        mShooter.ShootCommand();
+        mShooter.SpeakerShootCommand();
     }
     @Override
     public void end(boolean interrupted){
