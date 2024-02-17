@@ -18,6 +18,8 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -159,7 +161,9 @@ public class RobotContainer {
 
   private Command runAuto = drivetrain.getAutoPath("ScoreTestAuto");
  
-  
+  private SlewRateLimiter m_strafeX;
+  private SlewRateLimiter m_strafeY;
+
 
   private void configureBindings() {
     // intakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
@@ -183,11 +187,22 @@ public class RobotContainer {
     // bottomShootButton.whileTrue(mBottomShootCommand);
     // topShootButton.whileTrue(mTopShootCommand);
     // limeLightButton.whileTrue(mLimeLightTestCommand);
+    
+    m_strafeX = new SlewRateLimiter(5);
+    m_strafeY = new SlewRateLimiter(5);
+
+    // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+    //     drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
+    //         .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+    //         .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+    //     ));
 
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with
-            .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        drivetrain.applyRequest(() -> drive.withVelocityX(m_strafeX.calculate(MathUtil.applyDeadband(-joystick.getLeftY(),
+                0.1)) * MaxSpeed) // Drive forward with
+            .withVelocityY(m_strafeY.calculate(MathUtil.applyDeadband(-joystick.getLeftX(),
+            0.1)) * MaxSpeed) // Drive left with negative X (left)
+            .withRotationalRate(MathUtil.applyDeadband(-joystick.getRightX(), 0.1) * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
     joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> brake));
