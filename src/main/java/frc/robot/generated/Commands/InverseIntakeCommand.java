@@ -3,19 +3,19 @@ package frc.robot.generated.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.Manipulators.Intake;
 
-public class IntakeCommand extends Command{
+public class InverseIntakeCommand extends Command{
     
     private final Intake mIntake;
 
 
-    public IntakeCommand(Intake intake){
+    public InverseIntakeCommand(Intake intake){
 
     mIntake = intake;
     }
 
 @Override
 public void execute(){
-   mIntake.IntakeCommand();
+   mIntake.InverseIntakeCommand();
 }
 @Override
 public void end(boolean interrupted){

@@ -10,18 +10,15 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.Networking.LimeLightTable;
 import frc.robot.LimelightHelpers;
 import frc.robot.LimeLightCommands.LimeLightTestCommand;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class LimeLight {
+public class LimeLight{
 
 
     private LimeLightTable m_LimeLightTable;
 
-    // Pose3d campose = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-spud");
-
-    double tx;
-    // double idk = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
-
+    private double tx;
 
 
     public void LimeLightTestCommand(){
@@ -61,7 +58,7 @@ public class LimeLight {
 
     public LimeLight(){
         m_LimeLightTable = LimeLightTable.getInstance();
-}
+    }
 
 
     public double getXdeviation() {
@@ -106,7 +103,6 @@ public class LimeLight {
     public double getTargetID() {
         return m_LimeLightTable.getCurrentApriltagId();
     }
-
 
 }
 

@@ -5,6 +5,12 @@
 package frc.robot;
 
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.hal.HAL;
+import edu.wpi.first.hal.FRCNetComm.tInstances;
+import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -14,10 +20,19 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+    UsbCamera camera;
+
+    VideoSink server;
+
   @Override
   public void robotInit() {
     // SignalLogger.start();
-    m_robotContainer = new RobotContainer();
+        // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+        // autonomous chooser on the dashboard.
+    m_robotContainer = RobotContainer.getInstance();
+    HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+    camera = CameraServer.startAutomaticCapture(0);
+    server = CameraServer.getServer();
   }
 
   @Override

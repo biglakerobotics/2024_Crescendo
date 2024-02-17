@@ -14,6 +14,10 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackTy
 // import com.pathplanner.lib.auto.NamedCommands;
 // import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -29,58 +33,99 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.LimeLightCommands.LimeLightTestCommand;
 import frc.robot.generated.LimeLight;
 import frc.robot.generated.TunerConstants;
-import frc.robot.generated.Commands.BottomShootCommand;
-import frc.robot.generated.Commands.IntakeCommand;
+import frc.robot.generated.Commands.TrapShootCommand;
+import frc.robot.generated.Commands.IntakeWithIndexerCommand;
+import frc.robot.generated.Commands.IntakeWithoutIndexerCommand;
+import frc.robot.generated.Commands.InverseIntakeCommand;
 import frc.robot.generated.Commands.ShootCommand;
-import frc.robot.generated.Commands.SlowShootCommand;
-import frc.robot.generated.Commands.TopShootCommand;
-import frc.robot.generated.Manipulators.BottomShooter;
+import frc.robot.generated.Commands.AmpShootCommand;
+import frc.robot.generated.Commands.SpeakerShootCommand;
+import frc.robot.generated.Commands.StopShootCommand;
+import frc.robot.generated.Manipulators.TrapShooter;
+import frc.robot.generated.Manipulators.AmpShooter;
 import frc.robot.generated.Manipulators.Intake;
 import frc.robot.generated.Manipulators.Shooter;
-import frc.robot.generated.Manipulators.TopShooter;
+import frc.robot.generated.Manipulators.SpeakerShooter;
 
 public class RobotContainer {
 
+  private static RobotContainer m_robotContainer = new RobotContainer();
 
-  private final XboxController mXboxController = new XboxController(0);
+  /*BUTTONS!!!
+   * XBOX:
+   * A = Intake
+   * B = Shoot High
+   * X = Limelight Test
+   * Y = Shoot normal?
+   * Rbumper = Shoot Bottom? Also brake mode for swerve
+   * Lbumper = Reset Gyro
+   * 
+   * 
+   * 
+   * 
+   * 
+   */
+
+  private final XboxController mDriverController = new XboxController(0);
+  private final XboxController mManipulatorController = new XboxController(1);
+  private final XboxController mMasterController = new XboxController(2);
 
   private final Shooter mShooter = new Shooter();
-  private final BottomShooter mBottomShooter = new BottomShooter();
-  private final TopShooter mTopShooter = new TopShooter();
+  private final TrapShooter mTrapShooter = new TrapShooter();
+  private final SpeakerShooter mSpeakerShooter = new SpeakerShooter();
+  private final AmpShooter mAmpShooter = new AmpShooter();
   private final Intake mIntake = new Intake();
   private final LimeLight mLimelight = new LimeLight();
 
   private final ShootCommand mShootCommand = new ShootCommand(mShooter);
-  private final BottomShootCommand mBottomShootCommand = new BottomShootCommand(mBottomShooter);
-  private final TopShootCommand mTopShootCommand = new TopShootCommand(mTopShooter);
-  private final IntakeCommand mIntakeCommand = new IntakeCommand(mIntake);
+  private final AmpShootCommand mAmpShootCommand = new AmpShootCommand(mAmpShooter);
+  private final TrapShootCommand mTrapShootCommand = new TrapShootCommand(mTrapShooter);
+  private final SpeakerShootCommand mSpeakerShootCommand = new SpeakerShootCommand(mSpeakerShooter);
+  private final IntakeWithIndexerCommand mIntakeWithIndexerCommand = new IntakeWithIndexerCommand(mIntake);
+  private final IntakeWithoutIndexerCommand mIntakeWithoutIndexerCommand = new IntakeWithoutIndexerCommand(mIntake);
+  private final InverseIntakeCommand mInverseIntakeCommand = new InverseIntakeCommand(mIntake);
   private final LimeLightTestCommand mLimeLightTestCommand = new LimeLightTestCommand(mLimelight);
+  private final StopShootCommand mStopShootingCommand = new StopShootCommand(mShooter);
   
 
-  private JoystickButton shootButton = new JoystickButton(mXboxController, 4);
-  private JoystickButton intakeButton = new JoystickButton(mXboxController, 1);
-  private JoystickButton bottomShootButton = new JoystickButton(mXboxController, 6);
-  private JoystickButton topShootButton = new JoystickButton(mXboxController, 2);
-private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
+  private JoystickButton intakeWIndexerButton = new JoystickButton(mMasterController, 1); //A
+  private JoystickButton intakeWOIndexerButton = new JoystickButton(mMasterController, 2); //B
+  private JoystickButton speakerShootButton = new JoystickButton(mMasterController, 3); //X
+  private JoystickButton ampShootButton = new JoystickButton(mMasterController, 4); //Y
+  private JoystickButton trapShootButton = new JoystickButton(mMasterController, 7); //BackButton
+  private JoystickButton inverseIntakeButton = new JoystickButton(mMasterController, 8); //StartButton
+
+  private JoystickButton driverSlowSpeedButton = new JoystickButton(mDriverController, 6); //RB
+
+  private JoystickButton manipulatorIntakeWIndexerButton = new JoystickButton(mManipulatorController, 5); //LB
+  private JoystickButton manipulatorIntakeWOIndexerButton = new JoystickButton(mManipulatorController, 6); //RB
+  private JoystickButton manipulatorSpeakerShootButton = new JoystickButton(mManipulatorController, 1); //A
+  private JoystickButton manipulatorAmpShootButton = new JoystickButton(mManipulatorController, 2); //B
+  private JoystickButton manipulatorTrapShootButton = new JoystickButton(mManipulatorController, 4); //Y
+  private JoystickButton manipulatorInverseIntakeButton = new JoystickButton(mManipulatorController, 7); //BackButton
+  // private JoystickButton limeLightButton = new JoystickButton(mMasterController, 10);
 
 
   SendableChooser<Command> m_chooser;
-  final double MaxSpeed = 2; // 6 meters per second desired top speed
-  final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
+  final double MaxSpeed = 6; // 6 meters per second desired top speed
+  final double MaxAngularRate = Math.PI*2; // Half a rotation per second max angular velocity
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   
   public RobotContainer() {
 
     NamedCommands.registerCommand("PrintCookie",Commands.print("You have a cookie"));
+    NamedCommands.registerCommand("ShootSpeaker", mSpeakerShootCommand);
+    NamedCommands.registerCommand("StopShooting", mStopShootingCommand);
+    NamedCommands.registerCommand("IntakeFromFloor", mIntakeWithIndexerCommand);
+    NamedCommands.registerCommand("IntakeForShooting", mIntakeWithoutIndexerCommand);
+    // NamedCommands.registerCommand("StopShooting",);
     
 
 
-    // NamedCommands.registerCommand("PrintHi", Commands.print("Hi!!!!!!!!!"));
     configureBindings();
-    autoChooser.setDefaultOption("AutoForAsher",null);
-    autoChooser.addOption("TestingAutos", null);
-    autoChooser.addOption("Cookie Auto", null);
+    autoChooser.addOption("ScoreTestAuto",drivetrain.getAutoPath("ScoreTestAuto"));
+    autoChooser.setDefaultOption("AutoForAsher",drivetrain.getAutoPath("AutoForAsher"));
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
@@ -88,11 +133,14 @@ private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
 
 
   }
+  public static RobotContainer getInstance() {
+    return m_robotContainer;
+  }
 
   public Command getAutonomousCommand() {
     
 
-    return runAuto;
+    return autoChooser.getSelected();
 
 
   }
@@ -109,16 +157,32 @@ private JoystickButton limeLightButton = new JoystickButton(mXboxController, 3);
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   Telemetry logger = new Telemetry(MaxSpeed);
 
-  private Command runAuto = drivetrain.getAutoPath("AutoForAsher");
+  private Command runAuto = drivetrain.getAutoPath("ScoreTestAuto");
  
   
 
   private void configureBindings() {
-    shootButton.whileTrue(mShootCommand);
-    intakeButton.whileTrue(mIntakeCommand);
-    bottomShootButton.whileTrue(mBottomShootCommand);
-    topShootButton.whileTrue(mTopShootCommand);
-    limeLightButton.whileTrue(mLimeLightTestCommand);
+    // intakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
+    // intakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
+    // speakerShootButton.whileTrue(mSpeakerShootCommand);
+    // ampShootButton.whileTrue(mAmpShootCommand);
+    // trapShootButton.whileTrue(mTrapShootCommand);
+    // inverseIntakeButton.whileTrue(mInverseIntakeCommand);
+
+    manipulatorIntakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
+    manipulatorIntakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
+    manipulatorSpeakerShootButton.whileTrue(mSpeakerShootCommand);
+    manipulatorAmpShootButton.whileTrue(mAmpShootCommand);
+    manipulatorTrapShootButton.whileTrue(mTrapShootCommand);
+    manipulatorInverseIntakeButton.whileTrue(mInverseIntakeCommand);
+
+    driverSlowSpeedButton.whileTrue(mAmpShootCommand);
+
+    // shootButton.whileTrue(mShootCommand);
+    // intakeButton.whileTrue(mIntakeCommand);
+    // bottomShootButton.whileTrue(mBottomShootCommand);
+    // topShootButton.whileTrue(mTopShootCommand);
+    // limeLightButton.whileTrue(mLimeLightTestCommand);
 
     drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
         drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with

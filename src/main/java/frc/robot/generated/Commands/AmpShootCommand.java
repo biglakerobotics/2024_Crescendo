@@ -1,14 +1,18 @@
 package frc.robot.generated.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.generated.Manipulators.SlowShooter;
+import frc.robot.generated.Manipulators.AmpShooter;
 
-public class SlowShootCommand extends Command{
+public class AmpShootCommand extends Command{
 
-    private final SlowShooter mShooter;
+    private final AmpShooter mShooter;
 
-    public SlowShootCommand(SlowShooter shooter){
+    public AmpShootCommand(AmpShooter shooter){
         mShooter = shooter;
+    }
+
+    public void execute(){
+        mShooter.AmpShootCommand();
     }
     
     // @Override

@@ -1,0 +1,72 @@
+Master Button Bindings
+1 = A (Intake With Indexer)
+2 = B (Intake Without Indexer)
+3 = X (Speaker Shooter)
+4 = Y (Amp Shooter)
+5 = LB (In use resets field centric orientation)
+6 = RB (In use puts bot into brake mode)
+7 = BackButton (Trap Shooter)
+8 = StartButton (Inverse Intake)
+9 = LeftStickDown ()
+10 = RightStickDown ()
+LeftTrigger ()
+RightTrigger (Climber Activate)
+__________________________________
+
+Driver Button Bindings
+1 = A ()
+2 = B ()
+3 = X ()
+4 = Y ()
+5 = LB (In use resets field centric orientation)
+6 = RB (In use puts bot into brake mode)
+7 = BackButton ()
+8 = StartButton ()
+9 = LeftStickDown ()
+10 = RightStickDown ()
+LeftTrigger ()
+RightTrigger (Climber Activate)
+__________________________________
+
+Manipulator Button Bindings
+1 = A (Speaker Speed Preset)
+2 = B (Amp Speed Preset)
+3 = X (Reverse Shooter/Shooter Intake) not used
+4 = Y (Trap Speed Preset)
+5 = LB (Intake With Indexer)
+6 = RB (Intake Without Indexer)
+7 = BackButton (Inverse Intake)
+8 = StartButton ()
+9 = LeftStickDown ()
+10 = RightStickDown ()
+LeftTrigger ()
+RightTrigger ()
+__________________________________
+
+Shooter Preset Speeds
+
+For Amp
+Top: .025 or 2.5%
+Bottom: -.15 or -15%
+Constants: ATS & ABS
+
+For Speaker
+Top: .2 or 20%
+Bottom: -.5 or -50%
+Constants: STS & SBT
+
+For Trap:
+Top: Need to find
+Bottom: Need to find
+Constatns: TTS & TBS
+
+For Inverse
+Top: -.35 or -35%
+Bottom: .35 or 35%
+Constants: ITS & IBS
+__________________________________
+
+Intake Speeds
+Regular: .15 or 15%
+Inverse: -.15 or -15%
+__________________________________

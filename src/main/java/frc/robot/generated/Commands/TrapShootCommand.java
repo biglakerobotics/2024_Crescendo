@@ -1,19 +1,19 @@
 package frc.robot.generated.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.generated.Manipulators.TopShooter;
+import frc.robot.generated.Manipulators.TrapShooter;
 
-public class TopShootCommand extends Command{
+public class TrapShootCommand extends Command{
 
-    private final TopShooter mShooter;
+    private final TrapShooter mShooter;
 
-    public TopShootCommand(TopShooter shooter){
+    public TrapShootCommand(TrapShooter shooter){
         mShooter = shooter;
     }
     
     @Override
     public void execute(){
-        mShooter.ShootCommand();
+        mShooter.TrapShootCommand();
     }
     @Override
     public void end(boolean interrupted){

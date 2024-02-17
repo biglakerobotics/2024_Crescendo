@@ -19,7 +19,7 @@ public class TunerConstants {
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
     // output type specified by SwerveModuleConstants.SteerMotorClosedLoopOutput
     private static final Slot0Configs steerGains = new Slot0Configs()
-        .withKP(40).withKI(0).withKD(.2)
+        .withKP(20).withKI(0).withKD(.2)
         .withKS(0.14641).withKV(0.0031).withKA(0.0024);
         // .withKS(0.14641).withKV(2.4461).withKA(0.1524);
     // When using closed-loop control, the drive motor uses the control
@@ -67,24 +67,42 @@ public class TunerConstants {
     private static final double kDriveFrictionVoltage = 0.25;
 
     public static class ShooterConstants{
+
+        //New Shooter Speeds
+        //STS = Speaker Top Shooter
+        //SBS = Speaker Bottom Shooter
+        public static final double STS = 1;
+        public static final double SBS = -.4;
+        //AMPTS = Amp Top Shooter
+        //AMPBS = Amp Bottom Shooter
+        public static final double ATS = .025;
+        public static final double ABS = -.15;
+        //TTS = Trap Top Shooter
+        //TBS = Trap Bottom Shooter
+        public static final double TTS = 0;
+        public static final double TBS = 0;
+        //ITS = Inverse Top Shooter
+        //IBS = Inverse Bottom Shooter
+        public static final double ITS = -.35;
+        public static final double IBS = .35;
+        //
+
         //Testing needed V (Y)
         public static final double TOPSHOOTERSPEED = .2;
-        public static final double BOTTOMSHOOTERSPEED = -1;
+        public static final double BOTTOMSHOOTERSPEED = -.5;
         // //Not effective V (B)
-        // public static final double SLOWTOPSHOOTERSPEED = .15;
-        // public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
+        public static final double SLOWTOPSHOOTERSPEED = .15;
+        public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
         //Testing needed V (B)
-        public static final double TTOPSHOOTERSPEED = -.35;
-        // -.35 ^
-        public static final double TBOTTOMSHOOTERSPEED = .35;
-        // .35 ^
+        public static final double TTOPSHOOTERSPEED = .35;
+        public static final double TBOTTOMSHOOTERSPEED = -.35;
         //Amp shooter V (RB)
-        public static final double BTOPSHOOTERSPEED = .05;
-        public static final double BBOTTOMSHOOTERSPEED = -.3;
+        public static final double BTOPSHOOTERSPEED = .025;
+        public static final double BBOTTOMSHOOTERSPEED = -.15;
         
     }
         public static class IntakeConstants{
-                public static final double INTAKESPEED = 0.15;
+                public static final double INTAKESPEED = .2;
         }
 
 //     public static class SwerveConstants {
