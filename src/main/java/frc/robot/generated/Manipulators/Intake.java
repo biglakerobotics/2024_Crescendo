@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 public class Intake extends TimedRobot{
-    public DigitalInput limitSwitch = new DigitalInput(0);
     //  public AnalogInput ultrasonicSensor = new AnalogInput(0);
 
     private final TalonFX IntakeMotor = new TalonFX(22);
@@ -25,15 +24,9 @@ public class Intake extends TimedRobot{
 
 
     public void IntakeCommand(){
-        if (limitSwitch.get())
-        {
+        
     IntakeMotor.set(IntakeConstants.INTAKESPEED);
     IntakeMotor2.set(IntakeConstants.INTAKESPEED);
-        }
-        else{
-        IntakeMotor.set(0);
-        IntakeMotor2.set(0);
-        }
     }
     public void IntakeWithoutIndexer(){
         IntakeMotor.set(IntakeConstants.INTAKESPEED);

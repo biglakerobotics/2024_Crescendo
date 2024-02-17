@@ -31,7 +31,7 @@ __________________________________
 Manipulator Button Bindings
 1 = A (Speaker Speed Preset)
 2 = B (Amp Speed Preset)
-3 = X (Reverse Shooter/Shooter Intake)
+3 = X (Reverse Shooter/Shooter Intake) not used
 4 = Y (Trap Speed Preset)
 5 = LB (Intake With Indexer)
 6 = RB (Intake Without Indexer)

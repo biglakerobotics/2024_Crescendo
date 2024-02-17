@@ -14,6 +14,10 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackTy
 // import com.pathplanner.lib.auto.NamedCommands;
 // import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+import edu.wpi.first.hal.HAL;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -45,6 +49,8 @@ import frc.robot.generated.Manipulators.SpeakerShooter;
 
 public class RobotContainer {
 
+  private static RobotContainer m_robotContainer = new RobotContainer();
+
   /*BUTTONS!!!
    * XBOX:
    * A = Intake
@@ -60,9 +66,9 @@ public class RobotContainer {
    * 
    */
 
-  // private final XboxController mDriverController = new XboxController(2);
+  private final XboxController mDriverController = new XboxController(0);
   private final XboxController mManipulatorController = new XboxController(1);
-  private final XboxController mMasterController = new XboxController(0);
+  private final XboxController mMasterController = new XboxController(2);
 
   private final Shooter mShooter = new Shooter();
   private final TrapShooter mTrapShooter = new TrapShooter();
@@ -82,25 +88,27 @@ public class RobotContainer {
   private final StopShootCommand mStopShootingCommand = new StopShootCommand(mShooter);
   
 
-  private JoystickButton intakeWIndexerButton = new JoystickButton(mMasterController, 1);
-  private JoystickButton intakeWOIndexerButton = new JoystickButton(mMasterController, 2);
-  private JoystickButton speakerShootButton = new JoystickButton(mMasterController, 3);
-  private JoystickButton ampShootButton = new JoystickButton(mMasterController, 4);
-  private JoystickButton trapShootButton = new JoystickButton(mMasterController, 7);
-  private JoystickButton inverseIntakeButton = new JoystickButton(mMasterController, 8);
+  private JoystickButton intakeWIndexerButton = new JoystickButton(mMasterController, 1); //A
+  private JoystickButton intakeWOIndexerButton = new JoystickButton(mMasterController, 2); //B
+  private JoystickButton speakerShootButton = new JoystickButton(mMasterController, 3); //X
+  private JoystickButton ampShootButton = new JoystickButton(mMasterController, 4); //Y
+  private JoystickButton trapShootButton = new JoystickButton(mMasterController, 7); //BackButton
+  private JoystickButton inverseIntakeButton = new JoystickButton(mMasterController, 8); //StartButton
 
-  private JoystickButton manipulatorIntakeWIndexerButton = new JoystickButton(mManipulatorController, 5);
-  private JoystickButton manipulatorIntakeWOIndexerButton = new JoystickButton(mManipulatorController, 6);
-  private JoystickButton manipulatorSpeakerShootButton = new JoystickButton(mManipulatorController, 1);
-  private JoystickButton manipulatorAmpShootButton = new JoystickButton(mManipulatorController, 2);
-  private JoystickButton manipulatorTrapShootButton = new JoystickButton(mManipulatorController, 4);
-  private JoystickButton manipulatorInverseIntakeButton = new JoystickButton(mManipulatorController, 7);
+  private JoystickButton driverSlowSpeedButton = new JoystickButton(mDriverController, 6); //RB
+
+  private JoystickButton manipulatorIntakeWIndexerButton = new JoystickButton(mManipulatorController, 5); //LB
+  private JoystickButton manipulatorIntakeWOIndexerButton = new JoystickButton(mManipulatorController, 6); //RB
+  private JoystickButton manipulatorSpeakerShootButton = new JoystickButton(mManipulatorController, 1); //A
+  private JoystickButton manipulatorAmpShootButton = new JoystickButton(mManipulatorController, 2); //B
+  private JoystickButton manipulatorTrapShootButton = new JoystickButton(mManipulatorController, 4); //Y
+  private JoystickButton manipulatorInverseIntakeButton = new JoystickButton(mManipulatorController, 7); //BackButton
   // private JoystickButton limeLightButton = new JoystickButton(mMasterController, 10);
 
 
   SendableChooser<Command> m_chooser;
   final double MaxSpeed = 6; // 6 meters per second desired top speed
-  final double MaxAngularRate = Math.PI; // Half a rotation per second max angular velocity
+  final double MaxAngularRate = Math.PI*2; // Half a rotation per second max angular velocity
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   
@@ -124,6 +132,9 @@ public class RobotContainer {
     // m_chooser.setDefaultOption("Test Auto", new SwerveAutoBuilder());
 
 
+  }
+  public static RobotContainer getInstance() {
+    return m_robotContainer;
   }
 
   public Command getAutonomousCommand() {
@@ -151,12 +162,12 @@ public class RobotContainer {
   
 
   private void configureBindings() {
-    intakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
-    intakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
-    speakerShootButton.whileTrue(mSpeakerShootCommand);
-    ampShootButton.whileTrue(mAmpShootCommand);
-    trapShootButton.whileTrue(mTrapShootCommand);
-    inverseIntakeButton.whileTrue(mInverseIntakeCommand);
+    // intakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
+    // intakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
+    // speakerShootButton.whileTrue(mSpeakerShootCommand);
+    // ampShootButton.whileTrue(mAmpShootCommand);
+    // trapShootButton.whileTrue(mTrapShootCommand);
+    // inverseIntakeButton.whileTrue(mInverseIntakeCommand);
 
     manipulatorIntakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
     manipulatorIntakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
@@ -164,6 +175,8 @@ public class RobotContainer {
     manipulatorAmpShootButton.whileTrue(mAmpShootCommand);
     manipulatorTrapShootButton.whileTrue(mTrapShootCommand);
     manipulatorInverseIntakeButton.whileTrue(mInverseIntakeCommand);
+
+    driverSlowSpeedButton.whileTrue(mAmpShootCommand);
 
     // shootButton.whileTrue(mShootCommand);
     // intakeButton.whileTrue(mIntakeCommand);
