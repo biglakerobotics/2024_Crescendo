@@ -1,0 +1,76 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7526658912966949,
+        "y": 6.607489004451693
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.9884407488113223,
+        "y": 7.2241309394899496
+      },
+      "isLocked": false,
+      "linkedName": "LeftMostStart"
+    },
+    {
+      "anchor": {
+        "x": 2.9018444001777643,
+        "y": 5.546502145632424
+      },
+      "prevControl": {
+        "x": 3.065073147687891,
+        "y": 7.668475863264069
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "MidStartPiece"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7,
+      "rotationDegrees": -69.49169852513586,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "Intake",
+      "waypointRelativePos": 0.9,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeFromFloor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "AllPiecesLeftSide",
+  "previewStartingState": {
+    "rotation": 60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

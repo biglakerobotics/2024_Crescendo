@@ -47,6 +47,18 @@
             {
               "type": "wait",
               "data": {
+                "waitTime": 0.1
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "IntakeForShooting"
+              }
+            },
+            {
+              "type": "wait",
+              "data": {
                 "waitTime": 2.0
               }
             },
