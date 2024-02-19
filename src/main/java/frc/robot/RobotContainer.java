@@ -42,6 +42,7 @@ import frc.robot.generated.Commands.InverseIntakeCommand;
 import frc.robot.generated.Commands.ShootCommand;
 import frc.robot.generated.Commands.AmpShootCommand;
 import frc.robot.generated.Commands.SpeakerShootCommand;
+import frc.robot.generated.Commands.StopIntakingCommand;
 import frc.robot.generated.Commands.StopShootCommand;
 import frc.robot.generated.Manipulators.TrapShooter;
 import frc.robot.generated.Manipulators.AmpShooter;
@@ -80,6 +81,7 @@ public class RobotContainer {
   private final LimeLight mLimelight = new LimeLight();
 
   private final ShootCommand mShootCommand = new ShootCommand(mShooter);
+  private final StopIntakingCommand mStopIntakingCommand = new StopIntakingCommand(mIntake);
   private final AmpShootCommand mAmpShootCommand = new AmpShootCommand(mAmpShooter);
   private final TrapShootCommand mTrapShootCommand = new TrapShootCommand(mTrapShooter);
   private final SpeakerShootCommand mSpeakerShootCommand = new SpeakerShootCommand(mSpeakerShooter);
@@ -105,7 +107,7 @@ public class RobotContainer {
   private JoystickButton manipulatorAmpShootButton = new JoystickButton(mManipulatorController, 2); //B
   private JoystickButton manipulatorTrapShootButton = new JoystickButton(mManipulatorController, 4); //Y
   private JoystickButton manipulatorInverseIntakeButton = new JoystickButton(mManipulatorController, 7); //BackButton
-  // private JoystickButton limeLightButton = new JoystickButton(mMasterController, 10);
+  private JoystickButton limeLightButton = new JoystickButton(mMasterController, 10);
 
 
   SendableChooser<Command> m_chooser;
@@ -116,18 +118,23 @@ public class RobotContainer {
   
   public RobotContainer() {
 
-    NamedCommands.registerCommand("PrintCookie",Commands.print("You have a cookie"));
+    //PUT AUTO COMMANDS HERE
+    // NamedCommands.registerCommand("PrintCookie",Commands.print("You have a cookie"));
     NamedCommands.registerCommand("ShootSpeaker", mSpeakerShootCommand);
     NamedCommands.registerCommand("StopShooting", mStopShootingCommand);
     NamedCommands.registerCommand("IntakeFromFloor", mIntakeWithIndexerCommand);
     NamedCommands.registerCommand("IntakeForShooting", mIntakeWithoutIndexerCommand);
+    NamedCommands.registerCommand("StopIntake", mStopIntakingCommand);
     // NamedCommands.registerCommand("StopShooting",);
-    
+     
 
 
     configureBindings();
+    //PUT AUTOS HERE
     autoChooser.addOption("ScoreTestAuto",drivetrain.getAutoPath("ScoreTestAuto"));
-    autoChooser.setDefaultOption("AutoForAsher",drivetrain.getAutoPath("AutoForAsher"));
+    autoChooser.addOption("ScoreAndPickupTest", drivetrain.getAutoPath("ScoreAndPickupTest"));
+    autoChooser.addOption("4Piece1st", drivetrain.getAutoPath("4Piece1st"));
+
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
 
@@ -159,7 +166,7 @@ public class RobotContainer {
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   Telemetry logger = new Telemetry(MaxSpeed);
 
-  private Command runAuto = drivetrain.getAutoPath("ScoreTestAuto");
+  // private Command runAuto = drivetrain.getAutoPath("ScoreTestAuto");
  
   private SlewRateLimiter m_strafeX;
   private SlewRateLimiter m_strafeY;
@@ -180,13 +187,11 @@ public class RobotContainer {
     manipulatorTrapShootButton.whileTrue(mTrapShootCommand);
     manipulatorInverseIntakeButton.whileTrue(mInverseIntakeCommand);
 
-    driverSlowSpeedButton.whileTrue(mAmpShootCommand);
-
     // shootButton.whileTrue(mShootCommand);
     // intakeButton.whileTrue(mIntakeCommand);
     // bottomShootButton.whileTrue(mBottomShootCommand);
     // topShootButton.whileTrue(mTopShootCommand);
-    // limeLightButton.whileTrue(mLimeLightTestCommand);
+    limeLightButton.whileTrue(mLimeLightTestCommand);
     
     m_strafeX = new SlewRateLimiter(5);
     m_strafeY = new SlewRateLimiter(5);

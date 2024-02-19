@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6891880450427569,
-      "y": 6.661898586955068
+      "x": 0.7435976275461322,
+      "y": 6.616557268202256
     },
-    "rotation": 59.2259638987518
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ScoreTest"
+            "pathName": "SCoreANdPickup"
           }
         }
       ]
