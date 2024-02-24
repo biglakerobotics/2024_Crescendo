@@ -95,7 +95,7 @@ public class RobotContainer {
   
 
   private final AutoStopIntakeCommand mAutoStopIntakeCommand = new AutoStopIntakeCommand(mIntake);
-  // private final IntakeWithIndexerCommand mAutoIntakeWithIndexerCommand = new IntakeWithIndexerCommand(mIntake);
+  private final IntakeWithIndexerCommand mAutoIntakeWithIndexerCommand = new AutoIntakeWithIndexerCommand(mIntake);
   private final AutoIntakeWithoutIndexerCommand mAutoIntakeWithoutIndexerCommand = new AutoIntakeWithoutIndexerCommand(mIntake);
   private final AutoSpeakerShootCommand mAutoSpeakerShootCommand = new AutoSpeakerShootCommand(mSpeakerShooter);
   private final AutoSpeakerShootOnlyCommand mAutoSpeakerShootWithIntakeCommand = new AutoSpeakerShootOnlyCommand(mSpeakerShooter, mIntake);
@@ -140,7 +140,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootSpeaker", mAutoSpeakerShootCommand.withTimeout(2));
     NamedCommands.registerCommand("ShootSpeakerWithIntake", mAutoSpeakerShootWithIntakeCommand.withTimeout(2));
     NamedCommands.registerCommand("StopShooting", mAutoStopShootCommand.withTimeout(0.1));
-    // NamedCommands.registerCommand("IntakeFromFloor", mIntakeWithIndexerCommand.withTimeout(3));
+    NamedCommands.registerCommand("IntakeFromFloor", mAutoIntakeWithIndexerCommand.withTimeout(3));
     NamedCommands.registerCommand("IntakeForShooting", mAutoIntakeWithoutIndexerCommand.withTimeout(3));
     NamedCommands.registerCommand("StopIntake", mAutoStopIntakeCommand.withTimeout(0.1));
 

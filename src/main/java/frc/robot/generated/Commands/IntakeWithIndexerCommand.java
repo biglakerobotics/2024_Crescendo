@@ -45,7 +45,6 @@ public void end(boolean interrupted){
 
 @Override
 public boolean isFinished(){
-    mIntake.StopIntakingCommand();
     return mpiecein;
 }
 
