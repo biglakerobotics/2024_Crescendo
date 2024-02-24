@@ -6,7 +6,7 @@ import frc.robot.generated.Manipulators.Intake;
 
 public class IntakeWithIndexerCommand extends Command{
     
-    public DigitalInput limitSwitch = new DigitalInput(0);
+    // public DigitalInput limitSwitch = new DigitalInput(0);
     
     private final Intake mIntake;
 
@@ -19,19 +19,23 @@ public class IntakeWithIndexerCommand extends Command{
 
 @Override
 public void initialize(){
-    mpiecein = !limitSwitch.get();
-    if(!mpiecein){
-        mIntake.IntakeCommand();
-    }
+    // mpiecein = !limitSwitch.get();
+    // if(!mpiecein){
+        // mIntake.IntakeCommand();
+    // }
 }
 
 @Override
 public void execute(){
-    if(!limitSwitch.get()){
-    System.out.println("Loaded");
+    // if(!limitSwitch.get()){
+    // System.out.println("Loaded");
+    //     mIntake.StopIntakingCommand();
+    //     mpiecein = true;
+    // System.out.println("NewLineV");
+    // }
+    mpiecein = mIntake.IntakeCommand();
+    if(mpiecein) {
         mIntake.StopIntakingCommand();
-        mpiecein = true;
-    System.out.println("NewLineV");
     }
 }
 @Override
@@ -41,6 +45,7 @@ public void end(boolean interrupted){
 
 @Override
 public boolean isFinished(){
+    mIntake.StopIntakingCommand();
     return mpiecein;
 }
 

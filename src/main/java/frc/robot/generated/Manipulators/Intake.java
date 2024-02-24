@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Intake extends TimedRobot{
     //  public AnalogInput ultrasonicSensor = new AnalogInput(0);
+    public DigitalInput limitSwitch = new DigitalInput(0);
+    private boolean mpiecein = false;
 
     private final TalonFX IntakeMotor = new TalonFX(22);
     private final TalonFX IntakeMotor2 = new TalonFX(23);
@@ -22,26 +24,34 @@ public class Intake extends TimedRobot{
 
 
 
-    public void IntakeCommand(){
-        
-    IntakeMotor.set(IntakeConstants.INTAKESPEED);
-    IntakeMotor2.set(IntakeConstants.INTAKESPEED);
+    public boolean IntakeCommand(){
+        if(!limitSwitch.get()){
+            System.out.println("Loaded");
+                StopIntakingCommand();
+                mpiecein = true;
+            System.out.println("NewLineV");
+        } else {
+            IntakeMotor.set(IntakeConstants.INTAKESPEED);
+            IntakeMotor2.set(IntakeConstants.INTAKESPEED);
+            mpiecein = false;
+        }
+        return mpiecein;
     }
+
     public void IntakeWithoutIndexer(){
         IntakeMotor.set(IntakeConstants.INTAKESPEED);
         IntakeMotor2.set(IntakeConstants.INTAKESPEED);
-
     }
 
     public void InverseIntakeCommand(){
-IntakeMotor.set(-IntakeConstants.INTAKESPEED);
-IntakeMotor2.set(-IntakeConstants.INTAKESPEED);
+        IntakeMotor.set(-IntakeConstants.INTAKESPEED);
+        IntakeMotor2.set(-IntakeConstants.INTAKESPEED);
     }
 
 
-public void StopIntakingCommand(){
-    IntakeMotor.set(0);
-    IntakeMotor2.set(0);
+    public void StopIntakingCommand(){
+        IntakeMotor.set(0);
+        IntakeMotor2.set(0);
 
-}
+    }
 }
