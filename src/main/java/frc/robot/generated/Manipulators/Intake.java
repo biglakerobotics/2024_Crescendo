@@ -3,7 +3,6 @@ package frc.robot.generated.Manipulators;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import frc.robot.generated.Commands.IntakeWithoutIndexerCommand;
-import frc.robot.generated.Commands.driveB;
 import frc.robot.generated.TunerConstants.IntakeConstants;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7526658912966949,
-      "y": 6.607489004451693
+      "x": 0.6982563087933195,
+      "y": 4.4673787593189225
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -31,27 +31,40 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "StopIntake"
+            "waitTime": 0.1
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "StopShooting"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopShooting"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Pickup1st"
+            "pathName": "GetBottomFrom3rd"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GoBack"
+            "pathName": "ShootBottomFrom3rd"
           }
         },
         {
@@ -74,26 +87,39 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "StopIntake"
+            "waitTime": 0.1
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "StopShooting"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "ToMid"
+            "pathName": "Escape"
           }
         }
       ]
     }
   },
-  "folder": "StartAt1st",
+  "folder": "StartAt3rd",
   "choreoAuto": false
 }

@@ -3,43 +3,49 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7345293637955697,
-        "y": 6.63469379570338
+        "x": 0.6982563087933195,
+        "y": 4.4673787593189225
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5778778925978905,
-        "y": 6.979287818224759
+        "x": 1.8408575413642057,
+        "y": 4.149989528049232
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LeftPostStart"
     },
     {
       "anchor": {
-        "x": 2.892776136429466,
-        "y": 6.997424345725884
+        "x": 8.288393068014207,
+        "y": 2.4360876791929025
       },
       "prevControl": {
-        "x": 1.892776136429466,
-        "y": 6.997424345725884
+        "x": 3.727056401481224,
+        "y": 0.3685235440646322
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "PickedUp1stNote"
+      "linkedName": "Middle pickup 2"
     }
   ],
-  "rotationTargets": [
+  "rotationTargets": [],
+  "constraintZones": [
     {
-      "waypointRelativePos": 0.65,
-      "rotationDegrees": 0,
-      "rotateFast": false
+      "name": "Speeding",
+      "minWaypointRelativePos": 0.3,
+      "maxWaypointRelativePos": 0.85,
+      "constraints": {
+        "maxVelocity": 6.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
     }
   ],
-  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 0.75,
+      "name": "Begin Pickup",
+      "waypointRelativePos": 0.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -62,14 +68,14 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
+    "velocity": 0,
     "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4piece1st",
+  "folder": "3piece3rd",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -56,6 +56,16 @@ import frc.robot.generated.TunerConstants;
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
 
+    private static CommandSwerveDrivetrain instance;
+
+    public static CommandSwerveDrivetrain getInstance(){
+        if(instance == null){
+            instance = new CommandSwerveDrivetrain(null, null);
+        }
+        return instance;
+    }
+
+
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds().withDriveRequestType(DriveRequestType.Velocity).withSteerRequestType(SteerRequestType.MotionMagicExpo);
 
 
@@ -105,7 +115,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)),
             new HolonomicPathFollowerConfig(
             new PIDConstants(5,0,0),  //Translation PID
-            new PIDConstants(20.0, 0, .2 ), //Rotation PID
+            new PIDConstants(20, 0, 0.2 ), //Rotation PID
             TunerConstants.kSpeedAt12VoltsMps, 
             driveBaseRadius,
             new ReplanningConfig(false, false),
@@ -175,6 +185,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 .voltage(m_turnVoltageMeasure.mut_replace(m_turnVoltage.getValueAsDouble(), Units.Volts));
         }, this)
     );
+    // private final SwerveRequest.SysIdSwerveRotation m_rotReq = new SwerveRequest.SysIdSwerveRotation();
 
     private final DriveSetVoltageRequest driveVoltReq = new DriveSetVoltageRequest();
     private final TurnSetVoltageRequest turnVoltReq = new TurnSetVoltageRequest();
@@ -203,9 +214,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         this.setControl(driveVoltReq);
     }
 
-    private void setModuleVolt(Measure<Voltage> voltage) {
+    private void setModuleVolt(Measure<Voltage> voltage) { 
         turnVoltReq.voltage = voltage.magnitude(); 
         // this.setControl(turnVoltReq);
+        // this.setControl(m_rotReq.withVolts(voltage));
     }
     
     public Command turnQ(SysIdRoutine.Direction direction) {
@@ -223,6 +235,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     public Command driveD(SysIdRoutine.Direction direction) {
         return driveRoutine.dynamic(direction);
     }
+
+    
+    
     // class SimSwerveModule {
     //     private SwerveModulePosition currenntPosition = new SwerveModulePosition();
     //     private SwerveModuleState currenState = new SwerveModuleState();

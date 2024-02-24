@@ -11,8 +11,8 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
-// import com.pathplanner.lib.auto.NamedCommands;
-// import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
@@ -23,6 +23,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -39,13 +40,24 @@ import frc.robot.generated.Commands.TrapShootCommand;
 import frc.robot.generated.Commands.IntakeWithIndexerCommand;
 import frc.robot.generated.Commands.IntakeWithoutIndexerCommand;
 import frc.robot.generated.Commands.InverseIntakeCommand;
+import frc.robot.generated.Commands.LeftClimbCommandIn;
 import frc.robot.generated.Commands.ShootCommand;
 import frc.robot.generated.Commands.AmpShootCommand;
+// import frc.robot.generated.Commands.AutoIntakeWithIndexerCommand;
+import frc.robot.generated.Commands.AutoIntakeWithoutIndexerCommand;
+import frc.robot.generated.Commands.AutoSpeakerShootCommand;
+import frc.robot.generated.Commands.AutoSpeakerShootOnlyCommand;
+import frc.robot.generated.Commands.AutoStopIntakeCommand;
+import frc.robot.generated.Commands.AutoStopShootCommand;
+import frc.robot.generated.Commands.RightClimbCommandIn;
+import frc.robot.generated.Commands.RightClimbCommandOut;
+import frc.robot.generated.Commands.LeftClimbCommandOut;
 import frc.robot.generated.Commands.SpeakerShootCommand;
 import frc.robot.generated.Commands.StopIntakingCommand;
 import frc.robot.generated.Commands.StopShootCommand;
 import frc.robot.generated.Manipulators.TrapShooter;
 import frc.robot.generated.Manipulators.AmpShooter;
+import frc.robot.generated.Manipulators.Climber;
 import frc.robot.generated.Manipulators.Intake;
 import frc.robot.generated.Manipulators.Shooter;
 import frc.robot.generated.Manipulators.SpeakerShooter;
@@ -53,21 +65,6 @@ import frc.robot.generated.Manipulators.SpeakerShooter;
 public class RobotContainer {
 
   private static RobotContainer m_robotContainer = new RobotContainer();
-
-  /*BUTTONS!!!
-   * XBOX:
-   * A = Intake
-   * B = Shoot High
-   * X = Limelight Test
-   * Y = Shoot normal?
-   * Rbumper = Shoot Bottom? Also brake mode for swerve
-   * Lbumper = Reset Gyro
-   * 
-   * 
-   * 
-   * 
-   * 
-   */
 
   private final XboxController mDriverController = new XboxController(0);
   private final XboxController mManipulatorController = new XboxController(1);
@@ -79,6 +76,7 @@ public class RobotContainer {
   private final AmpShooter mAmpShooter = new AmpShooter();
   private final Intake mIntake = new Intake();
   private final LimeLight mLimelight = new LimeLight();
+  private final Climber mClimber = new Climber();
 
   private final ShootCommand mShootCommand = new ShootCommand(mShooter);
   private final StopIntakingCommand mStopIntakingCommand = new StopIntakingCommand(mIntake);
@@ -90,24 +88,44 @@ public class RobotContainer {
   private final InverseIntakeCommand mInverseIntakeCommand = new InverseIntakeCommand(mIntake);
   private final LimeLightTestCommand mLimeLightTestCommand = new LimeLightTestCommand(mLimelight);
   private final StopShootCommand mStopShootingCommand = new StopShootCommand(mShooter);
+  private final RightClimbCommandIn mRightClimbCommandIn = new RightClimbCommandIn(mClimber);
+  private final RightClimbCommandOut mRightClimbCommandOut = new RightClimbCommandOut(mClimber);
+  private final LeftClimbCommandIn mLeftClimbCommandIn = new LeftClimbCommandIn(mClimber);
+  private final LeftClimbCommandOut mLeftClimbCommandOut = new LeftClimbCommandOut(mClimber);
   
 
+  private final AutoStopIntakeCommand mAutoStopIntakeCommand = new AutoStopIntakeCommand(mIntake);
+  // private final IntakeWithIndexerCommand mAutoIntakeWithIndexerCommand = new IntakeWithIndexerCommand(mIntake);
+  private final AutoIntakeWithoutIndexerCommand mAutoIntakeWithoutIndexerCommand = new AutoIntakeWithoutIndexerCommand(mIntake);
+  private final AutoSpeakerShootCommand mAutoSpeakerShootCommand = new AutoSpeakerShootCommand(mSpeakerShooter);
+  private final AutoSpeakerShootOnlyCommand mAutoSpeakerShootWithIntakeCommand = new AutoSpeakerShootOnlyCommand(mSpeakerShooter, mIntake);
+  private final AutoStopShootCommand mAutoStopShootCommand = new AutoStopShootCommand(mShooter);
+  
+// MasterControl need to swap to port zero and ungrey button bindings to commands at the bottom
   private JoystickButton intakeWIndexerButton = new JoystickButton(mMasterController, 1); //A
   private JoystickButton intakeWOIndexerButton = new JoystickButton(mMasterController, 2); //B
   private JoystickButton speakerShootButton = new JoystickButton(mMasterController, 3); //X
   private JoystickButton ampShootButton = new JoystickButton(mMasterController, 4); //Y
   private JoystickButton trapShootButton = new JoystickButton(mMasterController, 7); //BackButton
   private JoystickButton inverseIntakeButton = new JoystickButton(mMasterController, 8); //StartButton
+// 
 
-  private JoystickButton driverSlowSpeedButton = new JoystickButton(mDriverController, 6); //RB
+// Driver Buttons
+  private JoystickButton driverLeftClimbInButton = new JoystickButton(mDriverController, 5); //LB
+  private JoystickButton driverRightClimbInButton = new JoystickButton(mDriverController, 6); //RB
+//
 
+// Manipulator Buttons
   private JoystickButton manipulatorIntakeWIndexerButton = new JoystickButton(mManipulatorController, 5); //LB
   private JoystickButton manipulatorIntakeWOIndexerButton = new JoystickButton(mManipulatorController, 6); //RB
   private JoystickButton manipulatorSpeakerShootButton = new JoystickButton(mManipulatorController, 1); //A
   private JoystickButton manipulatorAmpShootButton = new JoystickButton(mManipulatorController, 2); //B
   private JoystickButton manipulatorTrapShootButton = new JoystickButton(mManipulatorController, 4); //Y
-  private JoystickButton manipulatorInverseIntakeButton = new JoystickButton(mManipulatorController, 7); //BackButton
-  private JoystickButton limeLightButton = new JoystickButton(mMasterController, 10);
+  private JoystickButton manipulatorInverseIntakeButton = new JoystickButton(mManipulatorController, 3); //X
+//
+
+
+  // private JoystickButton limeLightButton = new JoystickButton(mMasterController, 10);
 
 
   SendableChooser<Command> m_chooser;
@@ -119,28 +137,35 @@ public class RobotContainer {
   public RobotContainer() {
 
     //PUT AUTO COMMANDS HERE
-    // NamedCommands.registerCommand("PrintCookie",Commands.print("You have a cookie"));
-    NamedCommands.registerCommand("ShootSpeaker", mSpeakerShootCommand);
-    NamedCommands.registerCommand("StopShooting", mStopShootingCommand);
-    NamedCommands.registerCommand("IntakeFromFloor", mIntakeWithIndexerCommand);
-    NamedCommands.registerCommand("IntakeForShooting", mIntakeWithoutIndexerCommand);
-    NamedCommands.registerCommand("StopIntake", mStopIntakingCommand);
-    // NamedCommands.registerCommand("StopShooting",);
-     
+    NamedCommands.registerCommand("ShootSpeaker", mAutoSpeakerShootCommand.withTimeout(2));
+    NamedCommands.registerCommand("ShootSpeakerWithIntake", mAutoSpeakerShootWithIntakeCommand.withTimeout(2));
+    NamedCommands.registerCommand("StopShooting", mAutoStopShootCommand.withTimeout(0.1));
+    // NamedCommands.registerCommand("IntakeFromFloor", mIntakeWithIndexerCommand.withTimeout(3));
+    NamedCommands.registerCommand("IntakeForShooting", mAutoIntakeWithoutIndexerCommand.withTimeout(3));
+    NamedCommands.registerCommand("StopIntake", mAutoStopIntakeCommand.withTimeout(0.1));
 
 
-    configureBindings();
+
     //PUT AUTOS HERE
-    autoChooser.addOption("ScoreTestAuto",drivetrain.getAutoPath("ScoreTestAuto"));
-    autoChooser.addOption("ScoreAndPickupTest", drivetrain.getAutoPath("ScoreAndPickupTest"));
+
+    autoChooser.setDefaultOption("BoringAuto", drivetrain.getAutoPath("BoringAuto"));
+
+    autoChooser.setDefaultOption("ShooterTest", drivetrain.getAutoPath("ShooterTest"));
+
     autoChooser.addOption("4Piece1st", drivetrain.getAutoPath("4Piece1st"));
+    autoChooser.addOption("3Piece1st", drivetrain.getAutoPath("3 peice 14.85"));
+    autoChooser.addOption("2piece1st", drivetrain.getAutoPath("2piece1st"));
+    autoChooser.addOption("3piece1stFar", drivetrain.getAutoPath("3piece1stFar"));
+
+    autoChooser.addOption("1piece3rd", drivetrain.getAutoPath("1piece3rd"));
+    autoChooser.addOption("2piece3rd", drivetrain.getAutoPath("2piece3rd"));
+
+    autoChooser.addOption("2piece2nd", drivetrain.getAutoPath("2piece2nd"));
+
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
-
-    // m_chooser.setDefaultOption("Test Auto", new SwerveAutoBuilder());
-
-
+    configureBindings();
   }
   public static RobotContainer getInstance() {
     return m_robotContainer;
@@ -166,32 +191,40 @@ public class RobotContainer {
   SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
   Telemetry logger = new Telemetry(MaxSpeed);
 
-  // private Command runAuto = drivetrain.getAutoPath("ScoreTestAuto");
  
   private SlewRateLimiter m_strafeX;
   private SlewRateLimiter m_strafeY;
 
 
   private void configureBindings() {
+    // Master Control Bindings V
     // intakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
     // intakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
     // speakerShootButton.whileTrue(mSpeakerShootCommand);
     // ampShootButton.whileTrue(mAmpShootCommand);
     // trapShootButton.whileTrue(mTrapShootCommand);
     // inverseIntakeButton.whileTrue(mInverseIntakeCommand);
+    //
 
-    manipulatorIntakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand);
-    manipulatorIntakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand);
-    manipulatorSpeakerShootButton.whileTrue(mSpeakerShootCommand);
-    manipulatorAmpShootButton.whileTrue(mAmpShootCommand);
-    manipulatorTrapShootButton.whileTrue(mTrapShootCommand);
-    manipulatorInverseIntakeButton.whileTrue(mInverseIntakeCommand);
+    // Manipulator Driver Bindings V
+    manipulatorIntakeWIndexerButton.whileTrue(mIntakeWithIndexerCommand); //LB(5)
+    manipulatorIntakeWOIndexerButton.whileTrue(mIntakeWithoutIndexerCommand); //RB(6)
+    manipulatorSpeakerShootButton.whileTrue(mSpeakerShootCommand); //A(1)
+    manipulatorAmpShootButton.whileTrue(mAmpShootCommand); //B(2)
+    manipulatorTrapShootButton.whileTrue(mTrapShootCommand); //Y(4)
+    manipulatorInverseIntakeButton.whileTrue(mInverseIntakeCommand); //X(3)
+    //
 
-    // shootButton.whileTrue(mShootCommand);
-    // intakeButton.whileTrue(mIntakeCommand);
-    // bottomShootButton.whileTrue(mBottomShootCommand);
-    // topShootButton.whileTrue(mTopShootCommand);
-    limeLightButton.whileTrue(mLimeLightTestCommand);
+    // // Driver Bindings V
+    // driverRightClimbInButton.whileTrue(mRightClimbCommandIn); //RB(6)
+    // driverLeftClimbInButton.whileTrue(mLeftClimbCommandIn); //LB(5)
+    joystick.rightBumper().whileTrue(mRightClimbCommandIn);
+    joystick.leftBumper().whileTrue(mLeftClimbCommandIn);
+    joystick.rightTrigger(.5).whileTrue(mRightClimbCommandOut);
+    joystick.leftTrigger(.5).whileTrue(mLeftClimbCommandOut);
+
+    //
+
     
     m_strafeX = new SlewRateLimiter(5);
     m_strafeY = new SlewRateLimiter(5);
@@ -210,23 +243,23 @@ public class RobotContainer {
             .withRotationalRate(MathUtil.applyDeadband(-joystick.getRightX(), 0.1) * MaxAngularRate) // Drive counterclockwise with negative X (left)
         ));
 
-    joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> brake));
-    joystick.rightTrigger().whileTrue(drivetrain
-        .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+    joystick.y().whileTrue(drivetrain.applyRequest(() -> brake));
+    // joystick.rightTrigger().whileTrue(drivetrain
+    //     .applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
     // reset the field-centric heading on left bumper press
-    joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+    joystick.a().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
     if (Utils.isSimulation()) {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
 
-    SmartDashboard.putData("driveQforward", drivetrain.driveQ(SysIdRoutine.Direction.kForward));
-    SmartDashboard.putData("driveQreverse", drivetrain.driveQ(SysIdRoutine.Direction.kReverse));
+    SmartDashboard.putData("turnQforward", drivetrain.turnQ(SysIdRoutine.Direction.kForward));
+    SmartDashboard.putData("turnQreverse", drivetrain.turnQ(SysIdRoutine.Direction.kReverse));
 
-    SmartDashboard.putData("driveDforward", drivetrain.driveD(SysIdRoutine.Direction.kForward));
-    SmartDashboard.putData("driveDreverse", drivetrain.driveD(SysIdRoutine.Direction.kReverse));
+    SmartDashboard.putData("turnDforward", drivetrain.turnD(SysIdRoutine.Direction.kForward));
+    SmartDashboard.putData("turnDreverse", drivetrain.turnD(SysIdRoutine.Direction.kReverse));
 
     
     

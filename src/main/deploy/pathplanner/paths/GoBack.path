@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.647933015164276,
-        "y": 4.077443418044731
+        "x": 2.892776136429466,
+        "y": 6.997424345725884
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.9703042213106012,
-        "y": 5.437682980633597
+        "x": 2.493772531404712,
+        "y": 6.870468653218008
       },
       "isLocked": false,
-      "linkedName": "BottomPiece"
+      "linkedName": "PickedUp1stNote"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 6.607489004451693
       },
       "prevControl": {
-        "x": 1.7048335851061711,
-        "y": 7.1969261482427385
+        "x": 1.4871952550922647,
+        "y": 6.698171641957319
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,25 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "StopIntake",
+      "waypointRelativePos": 0.4,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "StopIntake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.5,
     "maxAcceleration": 3.5,
@@ -43,9 +61,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4piece1st",
+  "folder": "2piece1st",
   "previewStartingState": {
-    "rotation": -89.99999999994456,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -5,6 +5,7 @@ package frc.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.generated.LimeLight;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -27,6 +28,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class LimelightHelpers {
+
+    private static LimelightHelpers instance;
+
 
     public static class LimelightTarget_Retro {
 
@@ -771,5 +775,12 @@ public class LimelightHelpers {
         }
 
         return results;
+    }
+
+     public static LimelightHelpers getInstance(){
+        if(instance == null){
+            instance = new LimelightHelpers();
+        }
+        return instance;
     }
 }

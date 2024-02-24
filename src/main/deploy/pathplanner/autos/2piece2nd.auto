@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7526658912966949,
-      "y": 6.607489004451693
+      "x": 1.2967617163304503,
+      "y": 5.637184783141497
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -31,27 +31,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "StopIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopShooting"
+            "pathName": "GoToMidFrom2ndStart"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Pickup1st"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GoBack"
+            "pathName": "GoBackToMid"
           }
         },
         {
@@ -74,26 +62,14 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "StopIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopShooting"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "ToMid"
+            "pathName": "PastTheLine2nd"
           }
         }
       ]
     }
   },
-  "folder": "StartAt1st",
+  "folder": "StartAt2nd",
   "choreoAuto": false
 }

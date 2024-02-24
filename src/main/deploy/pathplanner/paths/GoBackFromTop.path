@@ -3,24 +3,24 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.684206070166527,
-        "y": 7.006492609476448
+        "x": 2.892776136429466,
+        "y": 6.997424345725884
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9224719151192695,
-        "y": 6.924878235721385
+        "x": 2.1310419813822086,
+        "y": 6.9158099719708215
       },
       "isLocked": false,
       "linkedName": "PickedUp1stNote"
     },
     {
       "anchor": {
-        "x": 0.7526658912966949,
+        "x": 0.7435976275461322,
         "y": 6.607489004451693
       },
       "prevControl": {
-        "x": 0.7798706825483829,
+        "x": 0.7708024187978202,
         "y": 6.843263861966322
       },
       "nextControl": null,
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "AllPiecesLeftSide",
+  "folder": "4piece1st",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

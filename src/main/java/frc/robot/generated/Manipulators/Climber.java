@@ -3,20 +3,39 @@ package frc.robot.generated.Manipulators;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 
-import frc.robot.generated.TunerConstants.ShooterConstants;
-
 public class Climber {
-    private final TalonFX ShootMotorTop = new TalonFX(20);
-    private final TalonFX ShootMotorBottom = new TalonFX(21);
+    private final TalonFX LeftClimber = new TalonFX(4);
+    private final TalonFX RightClimber = new TalonFX(5);
 
     public void ClimbCommand(){
-        ShootMotorTop.set(1);
-        ShootMotorBottom.set(1);
+        LeftClimber.set(-.15);
+        RightClimber.set(.15);
+    }
+
+    public void LeftClimbCommandIn(){
+        LeftClimber.set(-.15);
+    }
+
+    public void LeftClimbCommandout(){
+        LeftClimber.set(.15);
+    }
+    
+    public void RightClimbCommandIn(){
+        RightClimber.set(-.15);
+    }
+    
+    public void RightClimbCommandOut(){
+        RightClimber.set(.15);
+    }
+
+    public void ClimbCommandReversed(){
+        LeftClimber.set(.15);
+        RightClimber.set(-.15);
     }
 
     public void NoClimbCommand(){
-        ShootMotorTop.set(0);
-        ShootMotorBottom.set(0);
+        LeftClimber.set(0);
+        RightClimber.set(0);
     }
     
 }

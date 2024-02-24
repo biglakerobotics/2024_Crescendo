@@ -3,12 +3,12 @@ package frc.robot.generated.Commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.Manipulators.Intake;
 
-public class IntakeWithoutIndexerCommand extends Command{
+public class AutoIntakeWithoutIndexerCommand extends Command{
     
     private final Intake mIntake;
 
 
-    public IntakeWithoutIndexerCommand(Intake intake){
+    public AutoIntakeWithoutIndexerCommand(Intake intake){
 
     mIntake = intake;
     }
@@ -21,4 +21,5 @@ public void execute(){
 public void end(boolean interrupted){
     mIntake.StopIntakingCommand();
 }
+
 }

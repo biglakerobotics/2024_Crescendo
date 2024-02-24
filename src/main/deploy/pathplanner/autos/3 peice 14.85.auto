@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7345293637955697,
-      "y": 6.63469379570338
+      "x": 0.6075736712876936,
+      "y": 4.394832649314422
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -16,28 +16,27 @@
           "data": {
             "commands": [
               {
-                "type": "parallel",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "IntakeForShooting"
-                      }
-                    }
-                  ]
+                  "name": "ShootSpeaker"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.0
+                  "waitTime": 0.3
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.3
                 }
               },
               {
@@ -45,32 +44,32 @@
                 "data": {
                   "name": "StopIntake"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopShooting"
+                }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle bottom Pickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Return from middle bottom"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "TopPiece"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GoBackFromTop"
+            "waitTime": 0.3
           }
         },
         {
@@ -80,19 +79,37 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.3
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "IntakeForShooting"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 0.3
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "StopIntake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopShooting"
                 }
               }
             ]
@@ -101,19 +118,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "MidPiece"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopIntake"
+            "pathName": "Middle Pickup"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "GoBackFromMid"
+            "pathName": "Return from middle"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
           }
         },
         {
@@ -123,13 +140,25 @@
               {
                 "type": "named",
                 "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.3
+                }
+              },
+              {
+                "type": "named",
+                "data": {
                   "name": "IntakeForShooting"
                 }
               },
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 1.5
+                  "waitTime": 0.3
                 }
               },
               {
@@ -137,43 +166,19 @@
                 "data": {
                   "name": "StopIntake"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "StopShooting"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BottomPiece"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GoBackFromBottom"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "IntakeForShooting"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GoToMiddleField"
           }
         }
       ]
     }
   },
-  "folder": "StartAt1st",
+  "folder": "StartAt3rd",
   "choreoAuto": false
 }

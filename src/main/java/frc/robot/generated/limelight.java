@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimeLight{
 
+    private static LimeLight instance;
+
 
     private LimeLightTable m_LimeLightTable;
 
@@ -102,6 +104,13 @@ public class LimeLight{
     }
     public double getTargetID() {
         return m_LimeLightTable.getCurrentApriltagId();
+    }
+
+    public static LimeLight getInstance(){
+        if(instance == null){
+            instance = new LimeLight();
+        }
+        return instance;
     }
 
 }
