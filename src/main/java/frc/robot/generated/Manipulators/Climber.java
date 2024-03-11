@@ -13,24 +13,28 @@ public class Climber {
     }
 
     public void LeftClimbCommandIn(){
-        LeftClimber.set(-.15);
+        LeftClimber.set(-.5);
     }
 
     public void LeftClimbCommandout(){
-        LeftClimber.set(.15);
+        LeftClimber.set(.75);
     }
     
     public void RightClimbCommandIn(){
-        RightClimber.set(-.15);
+        RightClimber.set(-.5);
     }
     
     public void RightClimbCommandOut(){
-        RightClimber.set(.15);
+        RightClimber.set(.75);
     }
 
     public void ClimbCommandReversed(){
         LeftClimber.set(.15);
         RightClimber.set(-.15);
+    }
+    public void SuperClimbCommand(){
+        LeftClimber.set(1);
+        RightClimber.set(1);
     }
 
     public void NoClimbCommand(){

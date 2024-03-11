@@ -81,30 +81,30 @@ public class TunerConstants {
         public static final double ABS = -.15;
         //TTS = Trap Top Shooter
         //TBS = Trap Bottom Shooter
-        public static final double TTS = 0;
-        public static final double TBS = 0;
+        public static final double TTS = 1;
+        public static final double TBS = -.6;
         //ITS = Inverse Top Shooter
         //IBS = Inverse Bottom Shooter
         public static final double ITS = -.35;
         public static final double IBS = .35;
         //
 
-        //Testing needed V (Y)
-        public static final double TOPSHOOTERSPEED = .2;
-        public static final double BOTTOMSHOOTERSPEED = -.5;
-        // //Not effective V (B)
-        public static final double SLOWTOPSHOOTERSPEED = .15;
-        public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
-        //Testing needed V (B)
-        public static final double TTOPSHOOTERSPEED = .35;
-        public static final double TBOTTOMSHOOTERSPEED = -.35;
-        //Amp shooter V (RB)
-        public static final double BTOPSHOOTERSPEED = .025;
-        public static final double BBOTTOMSHOOTERSPEED = -.15;
+        // //Testing needed V (Y)
+        // public static final double TOPSHOOTERSPEED = .2;
+        // public static final double BOTTOMSHOOTERSPEED = -.5;
+        // // //Not effective V (B)
+        // public static final double SLOWTOPSHOOTERSPEED = .15;
+        // public static final double SLOWBOTTOMSHOOTERSPEED = -.15;
+        // //Testing needed V (B)
+        // public static final double TTOPSHOOTERSPEED = .35;
+        // public static final double TBOTTOMSHOOTERSPEED = -.35;
+        // //Amp shooter V (RB)
+        // public static final double BTOPSHOOTERSPEED = .025;
+        // public static final double BBOTTOMSHOOTERSPEED = -.15;
         
     }
         public static class IntakeConstants{
-                public static final double INTAKESPEED = .2;
+                public static final double INTAKESPEED = .25;
         }
 
 //     public static class SwerveConstants {
@@ -163,7 +163,7 @@ public class TunerConstants {
     private static final int kBackLeftDriveMotorId = 14;
     private static final int kBackLeftSteerMotorId = 15;
     private static final int kBackLeftEncoderId = 15;
-    private static final double kBackLeftEncoderOffset = -0.376708984375;
+    private static final double kBackLeftEncoderOffset = -0.324462890625;
 
     private static final double kBackLeftXPosInches = -12.375;
     private static final double kBackLeftYPosInches = 12.375;

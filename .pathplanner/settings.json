@@ -3,21 +3,26 @@
   "robotLength": 0.81,
   "holonomicMode": true,
   "pathFolders": [
-    "2piece1st",
-    "2piece2nd",
-    "2piece3rd(boring)",
-    "3piece3rd",
-    "4piece1st",
-    "3piece1stFar"
+    "2pieceLeft",
+    "2pieceCenter",
+    "2pieceRight(boring)",
+    "3pieceLeftFar",
+    "3pieceCenter",
+    "3pieceRight",
+    "4PieceRight",
+    "4pieceLeft",
+    "4pieceCenter",
+    "5PieceLeft",
+    "5thPieceCenter"
   ],
   "autoFolders": [
-    "StartAt2nd",
-    "StartAt1st",
-    "StartAt3rd"
+    "StartAtCenter",
+    "StartAtAmpSide",
+    "StartAtSourceSide"
   ],
-  "defaultMaxVel": 3.5,
-  "defaultMaxAccel": 3.5,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
-  "maxModuleSpeed": 4.5
+  "maxModuleSpeed": 6.0
 }

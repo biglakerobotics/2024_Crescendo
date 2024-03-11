@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6982563087933195,
-      "y": 4.4673787593189225
+      "x": 0.7435976275461322,
+      "y": 6.607489004451693
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -31,9 +31,15 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.1
+            "pathName": "Pickup1st"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoBack"
           }
         },
         {
@@ -43,13 +49,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "StopIntake"
+                  "name": "ShootSpeaker"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "StopShooting"
+                  "name": "IntakeForShooting"
                 }
               }
             ]
@@ -58,12 +64,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Escape"
+            "pathName": "1stFarNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoBackFromFar1st"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToMid"
           }
         }
       ]
     }
   },
-  "folder": "StartAt3rd",
+  "folder": "StartAtAmpSide",
   "choreoAuto": false
 }

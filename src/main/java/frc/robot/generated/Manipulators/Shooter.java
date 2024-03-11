@@ -10,8 +10,8 @@ public class Shooter {
     private final TalonFX ShootMotorBottom = new TalonFX(21);
 
     public void ShootCommand(){
-        ShootMotorTop.set(ShooterConstants.TOPSHOOTERSPEED);
-        ShootMotorBottom.set(ShooterConstants.BOTTOMSHOOTERSPEED);
+        // ShootMotorTop.set(ShooterConstants.TOPSHOOTERSPEED);
+        // ShootMotorBottom.set(ShooterConstants.BOTTOMSHOOTERSPEED);
     }
 
     public void StopShootingCommand(){

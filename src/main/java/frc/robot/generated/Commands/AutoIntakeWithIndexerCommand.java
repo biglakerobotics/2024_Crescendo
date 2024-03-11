@@ -34,9 +34,10 @@ public void execute(){
     // System.out.println("NewLineV");
     // }
     
-    mpiecein = mIntake.IntakeCommand();
     if(mpiecein) {
         mIntake.StopIntakingCommand();
+    }else { mpiecein = mIntake.IntakeCommand();
+        
     }
 }
 @Override

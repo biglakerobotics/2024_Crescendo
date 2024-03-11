@@ -3,59 +3,65 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3703485936791568,
-        "y": 5.738537302317324
+        "x": 1.256933262765204,
+        "y": 5.561962137140133
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2590384412342903,
-        "y": 5.602513346058885
+        "x": 2.256933262765204,
+        "y": 5.561962137140133
       },
       "isLocked": false,
-      "linkedName": "LeftMostStart"
+      "linkedName": "2ndStart"
     },
     {
       "anchor": {
-        "x": 2.140110245132771,
-        "y": 5.900164431907812
+        "x": 1.8671834700497596,
+        "y": 4.204838541835675
       },
       "prevControl": {
-        "x": 1.5896130725335542,
-        "y": 6.129538253824153
+        "x": 1.7396685013634345,
+        "y": 4.368786358718093
       },
       "nextControl": {
-        "x": 2.793025235173278,
-        "y": 5.628116519390933
+        "x": 2.009749539115449,
+        "y": 4.021539310179788
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.9018444001777643,
-        "y": 5.546502145632424
+        "x": 2.930228773078906,
+        "y": 4.098955215940945
       },
       "prevControl": {
-        "x": 2.366816838896836,
-        "y": 5.990847069413437
+        "x": 2.247112869402165,
+        "y": 4.135388064137039
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MidStartPiece"
+      "linkedName": "BottomPieceFirstThree"
     }
   ],
-  "rotationTargets": [
+  "rotationTargets": [],
+  "constraintZones": [
     {
-      "waypointRelativePos": 1.55,
-      "rotationDegrees": -60.0,
-      "rotateFast": false
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 1.45,
+      "constraints": {
+        "maxVelocity": 6.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
     }
   ],
-  "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 1.8,
+      "name": "intake",
+      "waypointRelativePos": 0.45,
       "command": {
         "type": "parallel",
         "data": {
@@ -79,13 +85,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4pieceLeft",
+  "folder": "4pieceCenter",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true

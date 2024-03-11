@@ -1,0 +1,149 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.256933262765204,
+      "y": 5.561962137140133
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoToMidFrom2ndStart"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoBackToMid"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoToTopFrom2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BackFromTopTo2nd"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomPieceFrom2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BackFromBottomPieceTo2nd"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5thPieceCenterPickup"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5Piece5thReturn"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Escape Center"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "StartAtCenter",
+  "choreoAuto": false
+}

@@ -56,14 +56,14 @@ import frc.robot.generated.TunerConstants;
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
 
-    private static CommandSwerveDrivetrain instance;
+    // private static CommandSwerveDrivetrain instance;
 
-    public static CommandSwerveDrivetrain getInstance(){
-        if(instance == null){
-            instance = new CommandSwerveDrivetrain(null, null);
-        }
-        return instance;
-    }
+    // public static CommandSwerveDrivetrain getInstance(){
+    //     if(instance == null){
+    //         instance = new CommandSwerveDrivetrain(null, null);
+    //     }
+    //     return instance;
+    // }
 
 
     private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds().withDriveRequestType(DriveRequestType.Velocity).withSteerRequestType(SteerRequestType.MotionMagicExpo);
@@ -78,6 +78,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     //     for (SwerveModule swerveModule :  m_swerveModules) {
     //         modulePositions.add(swerveModule.getPosition(true));
     //     }
+    
     // }
     // private SwerveDriveKinematics m_Kinematics;
     // public CommandSwerveDrivetrain() {
@@ -103,7 +104,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
 
     private void configurePathplanner(){
-        double driveBaseRadius = 0;
+        double driveBaseRadius = 0.4;
         for (var moduleLocation : m_moduleLocations){
             driveBaseRadius = Math.max(driveBaseRadius, moduleLocation.getNorm());
         }
@@ -115,7 +116,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)),
             new HolonomicPathFollowerConfig(
             new PIDConstants(5,0,0),  //Translation PID
-            new PIDConstants(20, 0, 0.2 ), //Rotation PID
+            new PIDConstants(30, 0, 0.2 ), //Rotation PID
             TunerConstants.kSpeedAt12VoltsMps, 
             driveBaseRadius,
             new ReplanningConfig(false, false),

@@ -2,98 +2,17 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6982563087933195,
-      "y": 4.4673787593189225
+      "x": 1.256933262765204,
+      "y": 5.561962137140133
     },
-    "rotation": -60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootSpeaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeForShooting"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "StopIntake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "StopShooting"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "GetBottomFrom3rd"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ShootBottomFrom3rd"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "ShootSpeaker"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeForShooting"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
               {
@@ -114,12 +33,105 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Escape"
+            "pathName": "GoToMidFrom2ndStart"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoBackToMid"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "GoToTopFrom2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BackFromTopTo2nd"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BottomPieceFrom2nd"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BackFromBottomPieceTo2nd"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeForShooting"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "PastTheLine2nd"
           }
         }
       ]
     }
   },
-  "folder": "StartAt3rd",
+  "folder": "StartAtCenter",
   "choreoAuto": false
 }

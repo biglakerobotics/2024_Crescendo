@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.032702653477429,
-        "y": 5.561962137140133
+        "x": 2.930228773078906,
+        "y": 4.098955215940945
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5792894659492998,
-        "y": 5.525689082137885
+        "x": 2.5203592308728613,
+        "y": 4.581690454539176
       },
       "isLocked": false,
-      "linkedName": "MidPieceFrom2ndStart"
+      "linkedName": "BottomPieceFirstThree"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 5.561962137140133
       },
       "prevControl": {
-        "x": 1.810097351549522,
-        "y": 5.543825609639008
+        "x": 2.049347711030224,
+        "y": 5.379797896159669
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
     {
       "name": "New Constraints Zone",
       "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.8,
+      "maxWaypointRelativePos": 0.85,
       "constraints": {
         "maxVelocity": 6.0,
         "maxAcceleration": 6.0,
@@ -45,7 +45,7 @@
   "eventMarkers": [
     {
       "name": "StopIntake",
-      "waypointRelativePos": 0.8,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "parallel",
         "data": {
@@ -73,7 +73,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2pieceCenter",
+  "folder": "4pieceCenter",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

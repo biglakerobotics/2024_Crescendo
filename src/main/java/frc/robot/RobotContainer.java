@@ -43,6 +43,7 @@ import frc.robot.generated.Commands.InverseIntakeCommand;
 import frc.robot.generated.Commands.LeftClimbCommandIn;
 import frc.robot.generated.Commands.ShootCommand;
 import frc.robot.generated.Commands.AmpShootCommand;
+import frc.robot.generated.Commands.AutoIntakeWithIndexerCommand;
 // import frc.robot.generated.Commands.AutoIntakeWithIndexerCommand;
 import frc.robot.generated.Commands.AutoIntakeWithoutIndexerCommand;
 import frc.robot.generated.Commands.AutoSpeakerShootCommand;
@@ -55,6 +56,7 @@ import frc.robot.generated.Commands.LeftClimbCommandOut;
 import frc.robot.generated.Commands.SpeakerShootCommand;
 import frc.robot.generated.Commands.StopIntakingCommand;
 import frc.robot.generated.Commands.StopShootCommand;
+import frc.robot.generated.Commands.SuperClimbCommand;
 import frc.robot.generated.Manipulators.TrapShooter;
 import frc.robot.generated.Manipulators.AmpShooter;
 import frc.robot.generated.Manipulators.Climber;
@@ -92,10 +94,11 @@ public class RobotContainer {
   private final RightClimbCommandOut mRightClimbCommandOut = new RightClimbCommandOut(mClimber);
   private final LeftClimbCommandIn mLeftClimbCommandIn = new LeftClimbCommandIn(mClimber);
   private final LeftClimbCommandOut mLeftClimbCommandOut = new LeftClimbCommandOut(mClimber);
+  private final SuperClimbCommand mSuperClimbCommand = new SuperClimbCommand(mClimber);
   
 
   private final AutoStopIntakeCommand mAutoStopIntakeCommand = new AutoStopIntakeCommand(mIntake);
-  private final IntakeWithIndexerCommand mAutoIntakeWithIndexerCommand = new AutoIntakeWithIndexerCommand(mIntake);
+  private final AutoIntakeWithIndexerCommand mAutoIntakeWithIndexerCommand = new AutoIntakeWithIndexerCommand(mIntake);
   private final AutoIntakeWithoutIndexerCommand mAutoIntakeWithoutIndexerCommand = new AutoIntakeWithoutIndexerCommand(mIntake);
   private final AutoSpeakerShootCommand mAutoSpeakerShootCommand = new AutoSpeakerShootCommand(mSpeakerShooter);
   private final AutoSpeakerShootOnlyCommand mAutoSpeakerShootWithIntakeCommand = new AutoSpeakerShootOnlyCommand(mSpeakerShooter, mIntake);
@@ -109,11 +112,6 @@ public class RobotContainer {
   private JoystickButton trapShootButton = new JoystickButton(mMasterController, 7); //BackButton
   private JoystickButton inverseIntakeButton = new JoystickButton(mMasterController, 8); //StartButton
 // 
-
-// Driver Buttons
-  private JoystickButton driverLeftClimbInButton = new JoystickButton(mDriverController, 5); //LB
-  private JoystickButton driverRightClimbInButton = new JoystickButton(mDriverController, 6); //RB
-//
 
 // Manipulator Buttons
   private JoystickButton manipulatorIntakeWIndexerButton = new JoystickButton(mManipulatorController, 5); //LB
@@ -137,11 +135,11 @@ public class RobotContainer {
   public RobotContainer() {
 
     //PUT AUTO COMMANDS HERE
-    NamedCommands.registerCommand("ShootSpeaker", mAutoSpeakerShootCommand.withTimeout(2));
-    NamedCommands.registerCommand("ShootSpeakerWithIntake", mAutoSpeakerShootWithIntakeCommand.withTimeout(2));
+    NamedCommands.registerCommand("ShootSpeaker", mAutoSpeakerShootCommand.withTimeout(0.5));
+    // NamedCommands.registerCommand("ShootSpeakerWithIntake", mAutoSpeakerShootWithIntakeCommand.withTimeout(2));
     NamedCommands.registerCommand("StopShooting", mAutoStopShootCommand.withTimeout(0.1));
     NamedCommands.registerCommand("IntakeFromFloor", mAutoIntakeWithIndexerCommand.withTimeout(3));
-    NamedCommands.registerCommand("IntakeForShooting", mAutoIntakeWithoutIndexerCommand.withTimeout(3));
+    NamedCommands.registerCommand("IntakeForShooting", mAutoIntakeWithoutIndexerCommand.withTimeout(.5));
     NamedCommands.registerCommand("StopIntake", mAutoStopIntakeCommand.withTimeout(0.1));
 
 
@@ -150,17 +148,23 @@ public class RobotContainer {
 
     autoChooser.setDefaultOption("BoringAuto", drivetrain.getAutoPath("BoringAuto"));
 
-    autoChooser.setDefaultOption("ShooterTest", drivetrain.getAutoPath("ShooterTest"));
 
-    autoChooser.addOption("4Piece1st", drivetrain.getAutoPath("4Piece1st"));
-    autoChooser.addOption("3Piece1st", drivetrain.getAutoPath("3 peice 14.85"));
-    autoChooser.addOption("2piece1st", drivetrain.getAutoPath("2piece1st"));
-    autoChooser.addOption("3piece1stFar", drivetrain.getAutoPath("3piece1stFar"));
+    autoChooser.addOption("4PieceLeft", drivetrain.getAutoPath("4PieceLeft"));
+    autoChooser.addOption("2pieceLeft", drivetrain.getAutoPath("2pieceLeft"));
+    autoChooser.addOption("3pieceLeftFar", drivetrain.getAutoPath("3pieceLeftFar"));
 
-    autoChooser.addOption("1piece3rd", drivetrain.getAutoPath("1piece3rd"));
-    autoChooser.addOption("2piece3rd", drivetrain.getAutoPath("2piece3rd"));
+    autoChooser.addOption("2pieceCenter", drivetrain.getAutoPath("2pieceCenter"));
+    autoChooser.addOption("3pieceCenter", drivetrain.getAutoPath("3pieceCenter"));
+    autoChooser.addOption("4pieceCenter", drivetrain.getAutoPath("4pieceCenter"));
+    autoChooser.addOption("3pieceCenterNOTOP", drivetrain.getAutoPath("3pieceCenterNOTOP"));
+    autoChooser.addOption("5pieceCenter", drivetrain.getAutoPath("5pieceCenter"));
 
-    autoChooser.addOption("2piece2nd", drivetrain.getAutoPath("2piece2nd"));
+    autoChooser.addOption("1pieceRight", drivetrain.getAutoPath("1pieceRight"));
+    autoChooser.addOption("2pieceRight", drivetrain.getAutoPath("2pieceRight"));
+    autoChooser.addOption("3PieceRight(far)", drivetrain.getAutoPath("3PieceRight"));
+    autoChooser.addOption("4pieceRight", drivetrain.getAutoPath("4pieceRight"));
+
+
 
 
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -223,11 +227,13 @@ public class RobotContainer {
     joystick.rightTrigger(.5).whileTrue(mRightClimbCommandOut);
     joystick.leftTrigger(.5).whileTrue(mLeftClimbCommandOut);
 
+    joystick.back().whileTrue(mSuperClimbCommand);
+
     //
 
     
-    m_strafeX = new SlewRateLimiter(5);
-    m_strafeY = new SlewRateLimiter(5);
+    m_strafeX = new SlewRateLimiter(3);
+    m_strafeY = new SlewRateLimiter(3);
 
     // drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
     //     drivetrain.applyRequest(() -> drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with

@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.032702653477429,
+        "x": 1.256933262765204,
         "y": 5.561962137140133
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5792894659492998,
-        "y": 5.525689082137885
+        "x": 2.48617529135197,
+        "y": 6.29645065115373
       },
       "isLocked": false,
-      "linkedName": "MidPieceFrom2ndStart"
+      "linkedName": "2ndStart"
     },
     {
       "anchor": {
-        "x": 1.256933262765204,
-        "y": 5.561962137140133
+        "x": 5.617321636862414,
+        "y": 6.4444684783960415
       },
       "prevControl": {
-        "x": 1.810097351549522,
-        "y": 5.543825609639008
+        "x": 4.382156689617474,
+        "y": 6.656211040780889
+      },
+      "nextControl": {
+        "x": 6.015831171745561,
+        "y": 6.376152558130359
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.577678181708652,
+        "y": 5.772695262450165
+      },
+      "prevControl": {
+        "x": 7.746501151809516,
+        "y": 5.715765328895429
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "2ndStart"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,7 +49,7 @@
     {
       "name": "New Constraints Zone",
       "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.8,
+      "maxWaypointRelativePos": 1.75,
       "constraints": {
         "maxVelocity": 6.0,
         "maxAcceleration": 6.0,
@@ -42,25 +58,7 @@
       }
     }
   ],
-  "eventMarkers": [
-    {
-      "name": "StopIntake",
-      "waypointRelativePos": 0.8,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "StopIntake"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -73,7 +71,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2pieceCenter",
+  "folder": "5thPieceCenter",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

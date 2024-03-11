@@ -3,59 +3,55 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3703485936791568,
-        "y": 5.738537302317324
+        "x": 2.907456799657011,
+        "y": 5.556361514942171
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.2590384412342903,
-        "y": 5.602513346058885
+        "x": 2.212656355137272,
+        "y": 4.9389284743481765
       },
       "isLocked": false,
-      "linkedName": "LeftMostStart"
+      "linkedName": "4P32P"
     },
     {
       "anchor": {
-        "x": 2.140110245132771,
-        "y": 5.900164431907812
+        "x": 0.7,
+        "y": 4.4673787593189225
       },
       "prevControl": {
-        "x": 1.5896130725335542,
-        "y": 6.129538253824153
-      },
-      "nextControl": {
-        "x": 2.793025235173278,
-        "y": 5.628116519390933
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.9018444001777643,
-        "y": 5.546502145632424
-      },
-      "prevControl": {
-        "x": 2.366816838896836,
-        "y": 5.990847069413437
+        "x": 0.9884407488113212,
+        "y": 4.304150011808796
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "MidStartPiece"
+      "linkedName": "LeftPostStart"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.55,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": -60.0,
       "rotateFast": false
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 0.1,
+      "maxWaypointRelativePos": 0.8,
+      "constraints": {
+        "maxVelocity": 6.0,
+        "maxAcceleration": 6.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
-      "name": "Intake",
-      "waypointRelativePos": 1.8,
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.3,
       "command": {
         "type": "parallel",
         "data": {
@@ -63,7 +59,7 @@
             {
               "type": "named",
               "data": {
-                "name": "IntakeFromFloor"
+                "name": "StopIntake"
               }
             }
           ]
@@ -79,13 +75,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -60.0,
+    "rotation": -58.67130713219583,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4pieceLeft",
+  "folder": "4PieceRight",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
