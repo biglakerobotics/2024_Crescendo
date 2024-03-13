@@ -3,15 +3,15 @@
   "robotLength": 0.81,
   "holonomicMode": true,
   "pathFolders": [
-    "2pieceLeft",
     "2pieceCenter",
+    "2pieceLeft",
     "2pieceRight(boring)",
-    "3pieceLeftFar",
     "3pieceCenter",
+    "3pieceLeftFar",
     "3pieceRight",
     "4PieceRight",
-    "4pieceLeft",
     "4pieceCenter",
+    "4pieceLeft",
     "5PieceLeft",
     "5thPieceCenter"
   ],
